@@ -1,0 +1,1 @@
+Respaldo de los archivos principales y referencias del diseño anterior del ejemplo 6. Para restaurarlo, copiar sus archivos principales a la raíz de ejemplo 6. No contiene otra copia de assets ni vendor y no está preparado como sitio independiente dentro de esta subcarpeta.

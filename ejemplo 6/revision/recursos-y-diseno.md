@@ -1,3 +1,5 @@
+> Esta ficha corresponde a la versión anterior del ejemplo 6. El diseño vigente se documenta en rediseno-calendario.md y en ../design-qa.md.
+
 # Dirección de diseño del ejemplo 6
 
 Se aplicaron Product Design index, get-context, ideate, image-to-code y design-qa. El usuario pidió una única propuesta a criterio del diseñador; por ello se produjo un solo concepto visual y se eligió como objetivo de implementación.

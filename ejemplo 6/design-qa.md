@@ -1,64 +1,65 @@
-# Revisión de diseño del ejemplo 6
+# Revisión del rediseño del ejemplo 6
 
-Fecha: 24 de octubre de 2026. Prototipo académico UTN.
+Fecha: 24 de octubre de 2026.
 
-## Fuente y evidencias
+## Resultado y alcance
 
-- Concepto elegido: revision/concepto-product-design.png, generado con Product Design e ImageGen integrado. El usuario delegó la dirección y pidió una única propuesta; se desarrolló ese concepto.
-- Captura final: revision/inicio-final-1440.png. Versión completa: revision/inicio-final-completo.png.
-- Comparación conjunta: revision/comparacion-general.png. Ampliación de portada, materiales y accesos: revision/comparacion-detalle.png.
-- Estado: Inicio, Sardinal, sin diálogos ni menús abiertos.
-- Concepto: 1487 × 1058 px. Captura de navegador: 1425 × 1013 px. Vista CSS: 1440 × 1024, devicePixelRatio 1. Se normalizaron ambas imágenes a 1440 × 1024 para comparar. La diferencia del área de captura y las barras del navegador no se trató como defecto del diseño.
-- Capturas de las seis vistas con anchos CSS de 1440, 768 y 390 px en revision/. Captura final móvil: revision/inicio-final-movil.png. Confirmación del reporte: revision/confirmacion-movil.png.
+Se reemplazó la composición anterior por una consulta de recolección con calendario semanal. El cambio abarca la presentación de las seis vistas: navegación verde continua, selector azul oscuro, horario visible en inicio, buscador de residuos, guía en filas, mapa a la izquierda del directorio y formulario de una columna. Se conserva la identidad municipal y el funcionamiento local del prototipo.
 
-## Hallazgos corregidos
+Los ejemplos 1 a 5 se comprobaron sin modificaciones (261 archivos). La versión anterior del sexto se guardó en revision/version-anterior-consulta/ como copia de sus archivos principales, concepto y captura. Para restaurarla se deben devolver esos archivos a la raíz del ejemplo 6; no es una copia independiente con todos sus recursos.
 
-- [P2, resuelto] El formulario de comunidad heredaba una superficie blanca detrás de la etiqueta. Se dejó transparente para reservar el blanco al selector y mantener la continuidad del fondo verde. Evidencia inicial: revision/inicio-1440.png; final: revision/inicio-final-1440.png.
-- [P2, resuelto] Los iconos iniciales de papel y metales no correspondían bien a sus materiales. Se usaron file-text y cylinder de la fuente oficial de la biblioteca y se renovaron las referencias para evitar la caché anterior. Se revisaron en la portada y la guía. Evidencia: revision/reciclaje-final.png.
-- [P2, resuelto] La tipografía principal quedaba más pequeña que la del concepto. Se ajustó a 46 px en la presentación ancha, con tres líneas y reducción propia para tableta y móvil. Los controles se mantienen completos.
-- [P3, resuelto] El pie institucional conservaba relleno exterior y una altura mínima del diseño anterior. Se retiraron ambos para que el contenido determine su altura. El pie puede quedar bajo el primer pliegue por la fila adicional de herramientas académicas; todas las acciones principales y la vista para papel quedan accesibles con desplazamiento normal.
+## Fuente y comparación visual
 
-No quedan hallazgos P0/P1/P2 pendientes en los recorridos revisados.
+- Objetivo: revision/concepto-calendario-comunidad.png, generado con Product Design e ImageGen integrado. El usuario pidió rediseñar el sexto a criterio del diseñador; se elaboró un único concepto.
+- Captura final: revision/calendario-inicio-final.png. Página completa: revision/calendario-inicio-completo.png.
+- Comparación conjunta: revision/comparacion-concepto-calendario.png.
+- Ampliación del selector y el calendario: revision/comparacion-detalle-calendario.png.
+- Estado: Inicio, Sardinal, semana de ejemplo del 26 de octubre al 1 de noviembre de 2026, sin diálogos y con desplazamiento vertical 0.
+- Vista CSS: 1440 × 1024, devicePixelRatio 1. Concepto: 1487 × 1058 px. Captura: 1425 × 1013 px. Ambas se normalizaron a 1440 × 1024 para la comparación. La densidad de captura y las barras del navegador no se interpretaron como diferencias del diseño.
+- Otras capturas: las seis vistas a 1440, 768 y 390 px de ancho CSS. revision/calendario-movil-final.png muestra la presentación móvil definitiva.
 
-## Cinco superficies de fidelidad
+## Hallazgos y reparación
 
-**Tipografía.** Rubik y Karla locales del proyecto. Título principal de 46 px en escritorio, títulos secundarios de 30/22 px, cuerpo de 14–16 px. Se comprobaron pesos, líneas, etiquetas, foco visible y saltos de línea en las tres dimensiones. Se conserva el carácter municipal del concepto.
+1. **P2, resuelto: contraste del menú móvil.** El componente heredado fijaba un fondo blanco por debajo de 700 px. Con texto e iconos blancos, cinco enlaces quedaban invisibles. Se reprodujo en navegador: fondo rgb(255,255,255) y texto blanco. Evidencia: revision/movil-antes-navegacion.png. Se fijó fondo transparente sobre la barra verde. Después de la corrección se comprobó el fondo transparente, se recorrieron las seis vistas en móvil y se capturó el resultado final.
+2. **P2, resuelto: navegación en vista para papel.** La superficie pasaba a blanco con enlaces blancos. Se excluyó la barra de esa presentación. Se comprobó que el control de papel la oculta y que desactivarlo restaura la navegación.
+3. **P2, resuelto: etiquetas semanales demasiado pequeñas en pantallas reducidas.** Se ajustaron a 10–12 px para metadatos y se abrevia la etiqueta seleccionada a «ordinaria» en móvil y tableta; el encabezado conserva el contexto de recolección. No se fuerza texto de 7 px ni se desborda la celda.
+4. **P3, resuelto: texto heredado sobre tarjetas de colores.** La guía ya no tiene tarjetas por color. Se sustituyó esa explicación por una indicación para confirmar recipiente, bolsa y condiciones con el lugar de entrega.
 
-**Espaciado y estructura.** Cabecera institucional, navegación horizontal por seis vistas, portada dividida, aviso compacto, materiales con divisores y apoyos en una superficie verde grisácea. La portada usa un ancho máximo de 1296 px. En móvil el selector y el botón se apilan, la foto pasa debajo y los cuatro materiales forman dos columnas. Los mapas y formularios se apilan sin desbordamiento. No se añadieron módulos ajenos al servicio.
+No quedan hallazgos P0/P1/P2 pendientes. El revisor independiente verificó el cierre del problema del menú y la coherencia de las comunidades, fechas y destinos.
 
-**Color.** Verde municipal #358b27, texto verde oscuro #163d2c, superficie #edf4eb, fondo blanco y aviso ámbar claro. Marcadores discretos de color para materiales. Sin degradados ni saturación innecesaria; se revisó el contraste visible de texto, enlaces y botones.
+## Superficies de fidelidad
 
-**Imágenes e iconos.** Foto costera existente con recorte natural, escudo y logo institucionales originales. Se reutiliza la biblioteca local de contorno y cuatro iconos de su fuente oficial. No hay ilustraciones sustituidas por dibujos CSS ni iconos artesanales. La fotografía es ilustrativa; no se afirma una ubicación municipal exacta. La implementación usa recursos reales, no la imagen plana del concepto.
+- **Tipografía:** Rubik local en títulos y Karla en cuerpo y controles. Título de página de 37 px y fecha destacada de 34 px en escritorio; cuerpo de 14–18 px. Los metadatos del calendario se reducen sin ocultar fechas ni el tipo de evento. Se comprobaron saltos de línea, foco y legibilidad en escritorio, tableta y móvil.
+- **Estructura y espacios:** barra horizontal de fondo verde, consulta en dos áreas planas y directorio inferior de listas. El calendario conserva siete columnas. En móvil el selector queda sobre el resumen y los materiales se presentan en una lista única. No hay portada costera ni cuadrícula de materiales coloreados. Las otras vistas comparten divisores, jerarquía y controles de la propuesta nueva.
+- **Color:** azul oscuro #173743 para la consulta, verde #205d43 para la navegación, tinta azul para títulos, verde claro en el día seleccionado y ámbar en el cambio de Sardinal. El contraste del menú se comprobó tras corregirlo. No se imita el degradado del concepto generado: los colores son planos.
+- **Recursos:** escudo y pie institucionales originales; iconos locales de biblioteca. No se dibujan imágenes mediante CSS ni se usa el concepto como imagen plana de la página. Los mapas mantienen OpenStreetMap con atribución. No se añadieron fotos ni ilustraciones.
+- **Contenido:** «Sin evento» describe la ausencia de datos en el escenario, en lugar de afirmar que no hay servicio real. Los horarios y ubicaciones siguen identificados como ficticios. Se conserva la Municipalidad como institución y se mantienen las limitaciones del reporte local. El concepto incluía frases y tamaños que se ajustaron para evitar afirmaciones no verificadas y mantener controles legibles.
 
-**Contenido.** Consulta por comunidad como tarea principal. Se evita inventar instrucciones oficiales para tapas, compresión o colores de bolsas. Los horarios, centros, campañas y recorridos están identificados como ficticios. Se mantiene el nombre de la Municipalidad, sin cuentas, registro, buscador global redundante ni marca nueva. Los cambios de redacción frente al concepto corrigen orientaciones no verificadas y aclaran el carácter académico.
+## Verificación funcional
 
-## Pruebas funcionales
+- Seis vistas a 1440 × 1024, 768 × 1024 y 390 × 844: una sola vista activa, sin desbordamiento horizontal ni recursos locales rotos.
+- Nueve comunidades: la selección actualiza inmediatamente fecha, horario, celda semanal y selector de rutas. Sardinal, Filadelfia, Corralillos y Los Jocotes: martes 27; Belén y Paso Tempisque: miércoles 28; Palmira: jueves 29; Artola y Playas del Coco: viernes 30. Todas las fechas corresponden a la semana ficticia indicada.
+- El aviso de cambio aparece solo para Sardinal. Su botón abre el detalle correcto.
+- «Ver recorrido» abre Rutas y horarios con la comunidad seleccionada. Cambiarla allí y volver a Inicio mantiene la sincronización; comprobado con Belén.
+- Buscador de inicio: «PLASTICO» encuentra un material; su botón abre la ficha de plástico. Una consulta inexistente muestra cero resultados y la opción de ir a la guía. «sillon» encuentra Muebles. Vaciar la búsqueda restaura seis materiales.
+- Reporte móvil: campos vacíos y descripción de espacios bloqueados; datos válidos muestran la confirmación de Palmira sin adjunto; «Crear otro reporte» restaura el formulario. Los controles de foto, previamente probados en la versión anterior de este mismo ejemplo, no cambiaron en este rediseño y no se repitió la selección de archivo.
+- Menú municipal móvil: abre y cierra con aria-expanded correcto.
+- Vista para papel: estado activado y desactivado; barra de navegación oculta de forma intencional. No se abrió el diálogo de impresión del sistema.
+- Directorio de centros: cartografía real visible en la captura y posiciones marcadas como ilustrativas. Los filtros y fichas conservan sus conexiones probadas; no se añadieron servicios externos ni geolocalización.
+- Consola: sin errores ni advertencias del sitio en los recorridos comprobados.
+- Revisión estática: recursos locales existentes, IDs únicos, destinos de ficha válidos y sintaxis JavaScript correcta. Los scripts propios no generan HTML.
 
-- Seis vistas a 1440 × 1024, 768 × 1024 y 390 × 844: exactamente una vista activa, sin desbordamiento horizontal ni imágenes locales rotas.
-- Consulta de las nueve comunidades desde la portada: abre rutas con el nombre, día y horario del escenario correspondiente. Sardinal conserva su aviso de cambio; Artola y Playas del Coco muestran viernes.
-- Acceso de papel desde inicio: abre su ficha de preparación. El aviso compacto abre el cambio de Sardinal.
-- Centros: búsqueda de vidrio devuelve un lugar; búsqueda inexistente, cero; limpiar restaura tres.
-- Materiales: plástico devuelve una ficha; búsqueda inexistente muestra estado vacío; limpiar restaura la guía.
-- Avisos: Campaña devuelve un aviso; limpiar restaura el listado.
-- Mapas: cartografía de OpenStreetMap cargada en el mapa de centros; mapas de rutas inicializados durante las consultas. Atribución y leyendas visibles. Sin geolocalización.
-- Reporte en móvil: bloqueo de campos vacíos y de descripción de espacios; foto válida con vista previa; confirmación con comunidad, descripción y nombre de la foto; reinicio limpia el formulario. No se transmitió ni persistió información.
-- La recuperación de foto inválida/mayor de 5 MB se conserva del controlador del ejemplo 5, ya probado en esta conversación; en el sexto se revisó el código y se probó una foto válida, sin repetir el archivo grande.
-- Vista para papel: activación y desactivación comprobadas. Menú municipal móvil: abre y cierra con aria-expanded correcto. No se abrió el diálogo de impresión del sistema.
-- Consola: sin errores ni advertencias del sitio en los recorridos probados.
-- Selector general: contiene seis enlaces y abre el ejemplo 6. Se verificó la preservación de 261 archivos de los ejemplos anteriores durante la creación, registrada en revision/preservacion.json.
-- Revisión independiente de código: sin bloqueantes; destinos, controles y recursos existen, sin IDs duplicados. Scripts propios sin generación de HTML.
+## Límites
 
-## Alcance y límites
-
-Prototipo local, sin publicación. El formulario no crea solicitudes municipales ni sube fotos. Los mapas necesitan conexión a OpenStreetMap y mantienen avisos de indisponibilidad. No se contactó a la Municipalidad ni se validaron datos operativos: se conserva su identificación como ejemplos. La revisión de impresión se limita al control y los estilos para papel, sin impresión física.
+Prototipo académico local. Las fechas, horarios, centros, campañas y recorridos no son datos operativos municipales verificados. Los mapas requieren conexión. El formulario no envía información, no sube fotos ni persiste solicitudes. La copia anterior es un respaldo de archivos para restauración, no otro ejemplo numerado.
 
 ## Lista de cierre
 
-- [x] Concepto y captura comparados juntos, con detalle ampliado.
-- [x] Tipografía, estructura, colores, recursos y contenido revisados.
-- [x] Navegación, comunidad, filtros, fichas y reportes probados.
-- [x] Computadora, tableta y móvil revisados.
-- [x] Revisión de código y comprobaciones de recursos realizadas.
-- [x] Selector actualizado y propuestas anteriores conservadas.
+- [x] Concepto nuevo comparado con implementación, en vista completa y detalle.
+- [x] Tipografía, espacios, colores, recursos y textos revisados.
+- [x] Calendario, búsqueda, navegación y reporte comprobados.
+- [x] Las seis vistas revisadas en computadora, tableta y móvil.
+- [x] Problemas P2 corregidos y vueltos a comprobar.
+- [x] Selector y respaldo actualizados; ejemplos anteriores conservados.
 
 final result: passed

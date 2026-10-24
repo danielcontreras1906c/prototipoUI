@@ -79,6 +79,7 @@ function updateCommunity(value) {
     : value + ': recorrido pendiente de verificar. El mapa conserva una vista general de referencia.';
   if (routeMap) updateRouteDisplay();
   document.getElementById('home-community').value = value;
+  updateOverview(value);
 }
 
 function createBaseMap(id, errorId) {
@@ -333,6 +334,37 @@ document.getElementById('paper-view').addEventListener('change',event => documen
 document.getElementById('print-view').addEventListener('click',() => window.print());
 
 document.getElementById('report-description').addEventListener('input', event => event.target.setCustomValidity(''));
+
+
+// El resumen semanal y el directorio existen en HTML: solo se cambia su estado.
+function updateOverview(value) {
+  const panels = Array.from(document.querySelectorAll('[data-overview-community]'));
+  const active = panels.find(panel => panel.dataset.overviewCommunity === value);
+  if (!active) return;
+  panels.forEach(panel => { panel.hidden = panel !== active; });
+  document.querySelectorAll('[data-week-day]').forEach(day => {
+    day.classList.toggle('is-collection', day.dataset.weekDay === active.dataset.dayIndex);
+  });
+  document.getElementById('overview-change').hidden = value !== 'Sardinal';
+}
+function filterHomeMaterials() {
+  const query = normalize(document.getElementById('home-material-query').value);
+  let count = 0;
+  document.querySelectorAll('[data-home-material]').forEach(item => {
+    const matches = normalize(item.textContent + ' ' + item.dataset.terms).includes(query);
+    item.hidden = !matches;
+    if (matches) count += 1;
+  });
+  const status = document.getElementById('home-material-count');
+  status.textContent = count + ' ' + (count === 1 ? status.dataset.one : status.dataset.many);
+  document.getElementById('home-material-empty').hidden = count !== 0;
+}
+document.getElementById('home-community').addEventListener('change', event => updateCommunity(event.target.value));
+document.getElementById('home-material-query').addEventListener('input', filterHomeMaterials);
+document.getElementById('home-material-form').addEventListener('submit', event => {
+  event.preventDefault();
+  document.querySelector('[data-home-material]:not([hidden]) button')?.focus();
+});
 
 window.addEventListener('hashchange',() => showScreen(true));
 window.addEventListener('beforeunload',() => { if (photoUrl) URL.revokeObjectURL(photoUrl); });

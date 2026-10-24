@@ -1,17 +1,18 @@
-# Ejemplo 6 · Consulta municipal clara
+# Ejemplo 6 · Calendario por comunidad
 
-Última propuesta del proyecto académico UTN para remodelar Servicios de basura y reciclaje de la Municipalidad de Carrillo. Dirección propia realizada con Product Design, basada en la identidad y el contenido existentes.
+Rediseño original del prototipo académico de Servicios de basura y reciclaje de la Municipalidad de Carrillo. Reemplaza la composición costera anterior; su copia está en revision/version-anterior-consulta/.
 
 ## Abrir
-Desde UI/index.html, elegir Ejemplo 6. Usar un servidor local; en esta sesión se utiliza http://127.0.0.1:5528/ejemplo%206/index.html.
+Usar UI/index.html y elegir Ejemplo 6, o http://127.0.0.1:5528/ejemplo%206/index.html mientras esté activo el servidor local.
 
-## Vistas
-Inicio, Rutas y horarios, Cómo reciclar, Centros de acopio, Avisos y Reportes y consultas. La portada prioriza seleccionar una comunidad y consultar su horario. Los accesos por material abren las fichas de preparación. Las demás vistas incluyen filtros, mapas, estados vacíos y formulario de prueba. La vista para papel y la impresión están al pie del contenido.
+## Diseño y uso
+Barra de navegación verde, consulta de comunidad en azul oscuro, horario visible en inicio y calendario semanal que se actualiza al cambiar la comunidad. El botón Ver recorrido abre Rutas y horarios. El buscador de residuos filtra seis accesos que abren sus fichas. Las otras cinco vistas se presentan con listas, mapas y formulario de ancho completo, conservando las interacciones probadas.
 
-## Archivos
-index.html contiene todas las pantallas, formularios, iconos y fichas. app.js controla estados e interacciones. municipal.css conserva la base y fuentes; styles.css los componentes funcionales heredados; sexto.css el diseño específico. assets contiene recursos locales y sus licencias; vendor/leaflet, la cartografía. revision contiene el concepto, capturas, comparación y decisiones. design-qa.md documenta la verificación.
+Los textos, fechas, pantallas y fichas están en index.html. app.js controla estados; Leaflet dibuja la cartografía. municipal.css conserva fuentes y base; styles.css los componentes funcionales heredados; sexto.css define la nueva presentación. revision contiene concepto, capturas y comparación; design-qa.md documenta la revisión.
 
 ## Límites
-Datos operativos ficticios. Los horarios, campañas, centros y recorridos no representan información municipal confirmada. OpenStreetMap suministra cartografía real con conexión; las líneas y puntos son ilustrativos. No se solicita la ubicación del dispositivo. El formulario es una simulación local: no envía información, no sube fotografías, no persiste reportes y no tiene servidor de datos. Una foto opcional se previsualiza solo en memoria; si no es imagen o supera 5 MB se descarta manteniendo el resto de campos.
+Todos los horarios, campañas, centros y recorridos son ficticios. La semana del 26 de octubre al 1 de noviembre de 2026 es un escenario de ejemplo. «Sin evento» indica ausencia de datos en ese escenario, no confirma que no exista servicio municipal. La cartografía real de OpenStreetMap requiere conexión; sus líneas y puntos son ilustrativos. Sin geolocalización ni cuentas.
 
-Se conservaron los ejemplos 1 a 5. El selector general contiene también este ejemplo.
+El reporte es una simulación local: no envía datos ni fotos, no guarda solicitudes y no tiene servidor de datos. Admite foto opcional válida de hasta 5 MB; al rechazar un archivo se conservan los demás campos. Vista para papel e impresión disponibles al pie.
+
+Los ejemplos 1 al 5 se conservaron. El enlace del selector sigue apuntando al ejemplo 6.
