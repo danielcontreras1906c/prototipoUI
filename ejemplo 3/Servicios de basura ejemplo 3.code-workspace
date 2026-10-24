@@ -1,0 +1,8 @@
+{
+  "folders": [{ "path": "." }],
+  "settings": {
+    "files.encoding": "utf8",
+    "livePreview.defaultPreviewPath": "/index.html",
+    "livePreview.serverRoot": ""
+  }
+}
