@@ -1,0 +1,56 @@
+/* Las láminas conservan una composición de escritorio a cualquier ancho. */
+.paper-sheet{padding:16px 26px 12px;min-height:700px;line-height:1.35}
+.sheet-label{margin-bottom:10px;padding-bottom:7px}
+.paper-sheet .sheet-header{padding-bottom:10px}
+.sheet-note{max-width:none;margin:12px 0 0;padding-top:8px;line-height:1.35}
+.sheet-content .demo-note,.sheet-content .source-line,.sheet-content .guide-callout,.sheet-content .week,.sheet-content [id$="guide-count"]{display:none}
+.sheet-content .page-intro{display:flex;flex-direction:row;align-items:center;margin-bottom:17px}
+.sheet-content .page-intro .community-field{width:auto;min-width:200px;flex-shrink:0}
+.sheet-content .page-intro h1{margin-bottom:8px}
+.sheet-content .page-intro p{font-size:12px}
+.sheet-content .breadcrumb{padding:13px 0 12px}
+.sheet-content .page{min-height:0;padding-bottom:8px}
+.sheet-content .hero-inner{display:grid;grid-template-columns:1fr 290px;gap:35px;padding:22px 18px}
+.sheet-content .hero-actions{display:flex}
+.sheet-content .hero-actions .button{width:auto}
+.sheet-content .hero-description{margin-bottom:17px}
+.sheet-content .action-grid,.sheet-content .guide-grid{grid-template-columns:repeat(3,1fr)}
+.sheet-content .action-card{display:flex;min-height:148px}
+.sheet-content .action-card p{margin-bottom:10px}
+.sheet-content .section{padding-top:18px;padding-bottom:12px}
+.sheet-content .schedule-layout{grid-template-columns:1fr 270px}
+.sheet-content .service-row{grid-template-columns:40px 1fr auto;padding:17px}
+.sheet-content .service-row>.tag{grid-column:auto}
+.sheet-content .service-row p{margin:4px 0}
+.sheet-content .tip-list{font-size:12px;line-height:1.45;margin-bottom:13px}
+.sheet-content .tip-list li{margin-bottom:9px}
+.sheet-content .filters{grid-template-columns:1.4fr 1fr 1fr auto;padding:12px;margin-bottom:16px}
+.sheet-content .filters>.field:first-child,.sheet-content .filter-reset{grid-column:auto}
+.sheet-content .filter-reset{height:38px;padding:0}
+.sheet-content .field label{margin-bottom:5px}
+.sheet-content .centers-layout{grid-template-columns:1fr 1fr}
+.sheet-content .detail-layout{grid-template-columns:1fr 280px}
+.sheet-content .detail-heading{margin-bottom:18px}
+.sheet-content .detail-heading h1{font-size:29px;margin:8px 0}
+.sheet-content .detail-section{margin-bottom:20px}
+.sheet-content .detail-main h2{margin-bottom:12px}
+.sheet-content .detail-main p{font-size:12px;line-height:1.5}
+.sheet-content .info-list{grid-template-columns:1fr 1fr}
+.sheet-content .soft-panel p{font-size:12px}
+.sheet-content .steps li{font-size:13px;line-height:1.5}
+.sheet-content .guide-search{margin-bottom:14px}
+.sheet-content .guide-card{padding:16px}
+.sheet-content .guide-card p{margin-bottom:11px}
+.sheet-content .notice-card{grid-template-columns:34px 1fr auto;padding:15px;gap:15px}
+.sheet-content .notice-card .text-link{grid-column:auto}
+.sheet-content .notice-card p:not(.notice-meta){display:none}
+.sheet-content .notice-card .notice-meta{margin-bottom:0;font-size:10px!important}
+.sheet-content .notice-content{max-width:900px}
+.sheet-content .notice-content>.lead{font-size:15px;max-width:none}
+.sheet-content .notice-content h1{font-size:29px}
+.sheet-content .change-comparison>div{padding:16px}
+@media print{
+  .paper-sheet{width:1110px;min-height:0;zoom:.84;padding:0;break-after:page;break-inside:avoid}
+  .paper-sheet:last-child{break-after:auto}
+  .sheet-note{margin-top:12px}
+}

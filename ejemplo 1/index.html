@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es-CR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#3d742d">
+  <meta name="description" content="Prototipo académico de consulta de recolección, avisos y entrega de residuos en Carrillo.">
+  <title>Carrillo | Residuos y reciclaje · Prototipo</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+  <div class="prototype-bar">
+    <span><span class="demo-dot" aria-hidden="true"></span> Prototipo académico UTN <span class="bar-detail">· Datos de ejemplo, sin validez oficial</span></span>
+    <div class="prototype-tools"><label><input type="checkbox" id="paper-mode"> Vista en papel</label><a href="papel.html">Ver láminas para papel <span aria-hidden="true">↗</span></a></div>
+  </div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#inicio" aria-label="Carrillo, residuos y reciclaje, inicio">
+        <span class="brand-mark" aria-hidden="true">♻</span><span><strong>Carrillo</strong><small>Residuos y reciclaje</small></span>
+      </a>
+      <button id="menu-toggle" class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-nav">Menú <span aria-hidden="true">☰</span></button>
+      <nav id="main-nav" aria-label="Navegación principal">
+        <a href="#inicio" data-nav="inicio">Inicio</a>
+        <a href="#horarios" data-nav="horarios">Recolección</a>
+        <a href="#puntos" data-nav="puntos">Dónde llevar residuos</a>
+        <a href="#guia" data-nav="guia">Cómo prepararlos</a>
+        <a href="#avisos" data-nav="avisos">Avisos <span class="notice-dot" aria-hidden="true"></span></a>
+      </nav>
+    </div>
+  </header>
+  <main id="contenido" tabindex="-1"></main>
+  <footer class="site-footer">
+    <div class="container footer-main"><a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true">♻</span><span><strong>Carrillo</strong><small>Residuos y reciclaje</small></span></a><p>Una propuesta para encontrar la información<br>que necesitás en tu comunidad.</p><a href="https://www.municarrillo.go.cr/tag/servicios-basura/" target="_blank" rel="noopener noreferrer">Consultar sitio municipal <span aria-hidden="true">↗</span></a></div>
+    <div class="container footer-bottom"><span>Diseño de Experiencias de Usuario · UTN · 2026</span><button class="text-button" id="about-button" type="button">Sobre este prototipo</button></div>
+  </footer>
+  <dialog id="about-dialog" aria-labelledby="about-title"><button class="dialog-close" type="button" aria-label="Cerrar información">×</button><span class="tag">Proyecto académico</span><h2 id="about-title">Un ejemplo para probar y dibujar</h2><p>Esta maqueta explora cómo consultar cambios de recolección, lugares de entrega y preparación de residuos en Carrillo.</p><p>Los horarios, avisos, campañas, puntos y posiciones del esquema son ficticios. No utilicés estos datos para sacar o trasladar residuos. Las condiciones reales deben verificarse con la Municipalidad o el receptor.</p><p>La arquitectura es una propuesta inicial: todavía debe contrastarse con el card sorting y las pruebas con participantes reales. Esta maqueta no acredita que esas actividades ya se hayan realizado.</p><p>No se envían consultas, no se solicitan datos personales ni se activan notificaciones. La comunidad seleccionada se mantiene únicamente mientras navegás esta página.</p><a class="button secondary" href="papel.html">Ver láminas para papel</a></dialog>
+</body>
+</html>
