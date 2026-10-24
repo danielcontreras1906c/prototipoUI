@@ -7,8 +7,9 @@
   <title>Servicios de basura – Ejemplo 3 · Prototipo municipal</title>
   <link rel="icon" href="assets/escudo-carrillo.png" type="image/png">
   <link rel="stylesheet" href="municipal.css">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261024d">
+  <script src="app.js?v=20261024d" defer></script>
+  <script src="reportes.js?v=20261024d" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#contenido">Omitir e ir al contenido</a>
@@ -126,6 +127,20 @@
   <path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" />
   <path d="M4 2C2.8 3.7 2 5.7 2 8" />
 </svg><span>Avisos y campañas</span></a>
+    <a href="#reportes" data-section-link="reportes"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+  <path d="m9 14 2 2 4-4" />
+</svg>Reportes y consultas</a>
     </nav>
 
     <section id="inicio" class="view home-view" data-view aria-labelledby="inicio-title">
@@ -659,7 +674,7 @@
   <path d="M5 12h14" />
   <path d="m12 5 7 7-7 7" />
 </svg></a></aside>
-    </section>
+    <p class="reports-home-link">¿Tenés una duda o hubo un problema con la recolección? <a href="#reportes">Completar un reporte de prueba</a></p></section>
 
     <section id="horarios" class="view" data-view aria-labelledby="horarios-title">
       <div class="section-heading"><div><h2 id="horarios-title"><span class="heading-icon"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
@@ -1134,7 +1149,22 @@
       <div class="empty-state" id="notices-empty" hidden><h3>No hay avisos de ejemplo con estos filtros</h3><p>Probá otra comunidad o tipo de aviso.</p></div>
     </section>
 
-    <div class="prototype-tools"><span>Prototipo académico · Información operativa sin verificar</span><div><label><input id="paper-view" type="checkbox"> Vista para papel</label><button type="button" id="print-view"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
+    <section id="reportes" class="view reports-view" data-view aria-labelledby="reports-title"><div class="section-heading"><h2 id="reports-title">Reportes y consultas</h2><p>Probá cómo plantear una consulta sobre recolección, materiales o lugares de entrega.</p></div><div class="report-layout"><aside class="report-intro"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="8" height="4" x="8" y="2" rx="1" ry="1" />
+  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+  <path d="m9 14 2 2 4-4" />
+</svg><h2>Reporte o consulta</h2><p>Si tenés una duda sobre el servicio o necesitás describir una situación, podés completar este formulario de prueba.</p><button class="button" type="button" id="new-report">Nuevo reporte</button><p class="simulation-note">Simulación local: no se envía información a la Municipalidad ni se guardan los archivos.</p></aside><div class="white-panel report-panel"><form id="report-form"><h2>Nuevo reporte</h2><div class="report-fields"><div class="field"><label for="report-type">Tipo de reporte</label><select id="report-type" required><option value="">Seleccioná una opción</option><option>El camión no pasó</option><option>Duda sobre un residuo</option><option>Información de un punto de entrega</option><option>Otra consulta</option></select></div><div class="field"><label for="report-community">Comunidad</label><select id="report-community" required><option value="">Seleccioná tu comunidad</option><option>Sardinal</option><option>Artola</option><option>Filadelfia</option><option>Belén</option><option>Palmira</option><option>Corralillos</option><option>Paso Tempisque</option><option>Los Jocotes</option><option>Playas del Coco</option></select></div></div><div class="field"><label for="report-description">Descripción</label><textarea aria-describedby="report-description-help" id="report-description" rows="5" minlength="15" maxlength="1000" required placeholder="Describí la situación sin incluir información personal."></textarea><span class="field-help" id="report-description-help">Escribí al menos 15 caracteres.</span></div><div class="field attachment-field"><label for="report-photo">Adjuntar foto <span>(opcional)</span></label><input type="file" id="report-photo" accept="image/*" aria-describedby="photo-help"><span class="field-help" id="photo-help">Una imagen de hasta 5 MB. Solo se muestra en este navegador.</span><p id="photo-error" class="field-error" role="alert" hidden>El archivo no se adjuntó. Elegí una imagen de hasta 5 MB o continuá sin foto.</p><div class="attachment-preview" id="photo-preview" hidden><img id="photo-image" alt="Vista previa de la imagen elegida"><span id="photo-name"></span><button class="plain-link" type="button" id="remove-photo">Quitar imagen</button></div></div><div class="report-actions"><span>Ejercicio académico · Sin envío real</span><button class="button" type="submit">Enviar reporte de prueba <svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></button></div></form><section id="report-success" class="report-success" aria-labelledby="report-success-title" hidden><span class="success-symbol"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg></span><h2 id="report-success-title" tabindex="-1">Reporte de prueba completado</h2><p>La simulación terminó. No se envió ni se guardó información.</p><dl><div><dt>Tipo</dt><dd id="success-type"></dd></div><div><dt>Comunidad</dt><dd id="success-community"></dd></div><div><dt>Descripción</dt><dd id="success-description"></dd></div><div><dt>Foto</dt><dd id="success-photo"></dd></div></dl><button class="button secondary" type="button" id="another-report">Crear otro reporte</button></section></div></div></section>
+    
+<div class="prototype-tools"><span>Prototipo académico · Información operativa sin verificar</span><div><label><input id="paper-view" type="checkbox"> Vista para papel</label><button type="button" id="print-view"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"
   width="24"
   height="24"
   viewBox="0 0 24 24"

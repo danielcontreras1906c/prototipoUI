@@ -50,3 +50,9 @@ No quedan hallazgos P0, P1 o P2 dentro del alcance revisado. Las diferencias en 
 No se realizaron pruebas con participantes ni evaluación formal de accesibilidad. No se verificó una impresión física. Las rutas reales, horarios, campañas, puntos y condiciones siguen pendientes de verificación municipal. Las secciones institucionales externas enlazan al sitio real y quedan fuera del prototipo académico.
 
 final result: passed
+
+
+## Actualización: reportes y consultas (24 de octubre de 2026)
+Se incorporó una vista estática de reportes con estilos propios del ejemplo. Se verificaron validación, confirmación y reinicio, y el ejemplo 3 con fotografía válida. Vistas de 1265, 768 y 390 px sin desbordamiento. Capturas ejemplo-2-reportes*.png en revision/. Scripts propios sin generación HTML, recursos locales completos e IDs únicos. Copia anterior en revision/antes-de-reportes-2026-10-24/. No hay envío ni persistencia de datos.
+
+Revisión independiente cerrada: búsqueda «consulta» prioriza reportes y el archivo rechazado se descarta sin borrar otros campos. Los casos de búsqueda se comprobaron en navegador y la recuperación con el controlador equivalente del ejemplo 5 usando un archivo de 6 MB. Sin hallazgos pendientes.

@@ -329,3 +329,47 @@ dialog h2 { font-size: 27px; }
   .material-list { grid-template-columns: 1fr; }
   .icon { color: #222; }
 }
+
+
+/* Reportes: componentes añadidos sin cambiar las vistas anteriores. */
+.reports-view .report-layout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:36px;align-items:start}
+.reports-view .report-panel{grid-column:1;grid-row:1;min-width:0}
+.reports-view .report-intro{grid-column:2;grid-row:1;border-left:1px solid #ddd;padding:8px 0 8px 24px}
+.reports-view .report-intro>.icon{width:30px;height:30px;fill:currentColor;color:var(--municipal-green);margin-bottom:18px}
+.reports-view .report-intro h2,.reports-view .report-panel h2{font-size:23px}
+.reports-view .report-intro p{font-size:15px;color:#555}
+.reports-view .simulation-note{font-size:12px!important;margin-top:22px}
+.reports-view .report-fields{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.reports-view .field{margin-bottom:22px;min-width:0}
+.reports-view label{display:block;margin-bottom:7px;font-size:14px}
+.reports-view select,.reports-view textarea{display:block;width:100%;font:inherit;border:1px solid #aaa;background:white;color:#222;padding:11px 12px;border-radius:0;min-width:0}
+.reports-view textarea{resize:vertical;min-height:145px;line-height:1.6}
+.reports-view textarea:focus-visible{outline:2px solid #000;outline-offset:3px}
+.reports-view .field-help{font-size:12px;color:#626262;display:block;margin-top:6px}
+.reports-view input[type=file]{max-width:100%;font-size:13px}
+.reports-view input::file-selector-button{font:inherit;padding:9px 12px;background:#f6f6f6;border:1px solid #aaa;margin-right:10px;cursor:pointer}
+.reports-view .field-error{font-size:13px;color:#a12222;margin-top:8px}
+.reports-view .attachment-preview{display:flex;flex-wrap:wrap;gap:15px;align-items:center;margin-top:16px;overflow-wrap:anywhere}
+.reports-view .attachment-preview img{width:85px;height:70px;object-fit:cover}
+.reports-view .attachment-preview span{font-size:12px;max-width:28ch;overflow-wrap:anywhere}
+.reports-view .plain-link{border:0;background:none;text-decoration:underline;color:var(--municipal-green);font:inherit;cursor:pointer}
+.reports-view .report-actions{display:flex;gap:16px;justify-content:space-between;align-items:center;border-top:1px solid #ddd;padding-top:20px}
+.reports-view .report-actions>span{font-size:11px;color:#666}
+.reports-view .report-actions .icon{width:15px;height:15px;fill:currentColor}
+.reports-view .success-symbol>.icon{width:36px;height:36px;fill:var(--municipal-green);margin-bottom:16px}
+.reports-view .report-success dl>div{padding:12px 0;border-bottom:1px solid #ddd}
+.reports-view dt{font-size:12px;color:#666}.reports-view dd{margin:4px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.reports-view .report-success .button{margin-top:20px}
+.reports-home-link{display:block;border-top:1px solid #ddd;padding-top:18px;margin-top:24px}
+.service-nav{flex-wrap:wrap}
+@media(max-width:760px){.reports-view .report-layout{grid-template-columns:1fr;gap:24px}.reports-view .report-panel,.reports-view .report-intro{grid-column:auto;grid-row:auto}.reports-view .report-intro{border-left:0;border-bottom:1px solid #ddd;padding:0 0 18px}.reports-view .report-intro>.icon,.reports-view #new-report{display:none}.reports-view .report-fields{grid-template-columns:1fr;gap:0}.reports-view .report-actions{align-items:stretch;flex-direction:column}.reports-view .simulation-note{margin-top:10px}}
+
+/* Ejemplo 3: ficha con guía lateral y campos agrupados. */
+.reports-view .report-layout{grid-template-columns:270px minmax(0,1fr);gap:22px}
+.reports-view .report-intro{grid-column:1;border:1px solid #e0e0e0;border-top:3px solid var(--municipal-green);border-radius:8px;padding:24px;background:#f8faf7}
+.reports-view .report-panel{grid-column:2;border:1px solid #e0e0e0;border-radius:10px;padding:26px}
+.reports-view .report-intro>.icon{fill:none;stroke:currentColor;stroke-width:1.8}
+.reports-view select,.reports-view textarea{border-radius:6px;border-color:#bdbdbd}
+.reports-view .button{border-radius:6px}
+.reports-view .report-actions .icon{display:none}
+@media(max-width:760px){.reports-view .report-layout{grid-template-columns:1fr}.reports-view .report-intro,.reports-view .report-panel{grid-column:auto;grid-row:auto;padding:20px}.reports-view .report-panel{padding:20px}}

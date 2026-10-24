@@ -61,3 +61,7 @@ El pie del sitio de referencia indica licencia Creative Commons Attribution 4.0.
 Los horarios de servicio, fechas de avisos, campañas, lugares de entrega y sus condiciones son ficticios para evaluar la interfaz. Las direcciones y los contactos de esos lugares se indican pendientes de verificar. El contacto general del pie reproduce información pública del sitio municipal; no equivale a un contacto verificado del servicio de residuos.
 
 La información de la investigación orienta las tareas, sin publicar nombres ni respuestas de participantes. No se simulan resultados de card sorting o pruebas. No hay notificaciones, cuentas, base de datos, envío de consultas ni integración municipal.
+
+
+## Reportes y consultas (24 de octubre de 2026)
+Formulario local con tipo, comunidad, descripción y foto opcional de hasta 5 MB. Validación y resumen de prueba, sin envío, almacenamiento ni servidor de datos. Contenido estático en index.html; reportes.js controla estados. Copia previa en revision/antes-de-reportes-2026-10-24.

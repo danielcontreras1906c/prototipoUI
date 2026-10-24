@@ -54,3 +54,9 @@ No quedan hallazgos P0, P1 o P2 dentro del alcance revisado.
 La revisión técnica y visual no sustituye el card sorting ni las pruebas de usabilidad del curso. No se hicieron pruebas con participantes, una evaluación formal de accesibilidad ni una impresión física. Los datos de servicio y las fichas siguen pendientes de verificación municipal. La navegación institucional externa conserva enlaces al sitio real y queda fuera del prototipo.
 
 final result: passed
+
+
+## Actualización: reportes y consultas (24 de octubre de 2026)
+Se incorporó una vista estática de reportes con estilos propios del ejemplo. Se verificaron validación, confirmación y reinicio, y el ejemplo 3 con fotografía válida. Vistas de 1265, 768 y 390 px sin desbordamiento. Capturas ejemplo-3-reportes*.png en revision/. Scripts propios sin generación HTML, recursos locales completos e IDs únicos. Copia anterior en revision/antes-de-reportes-2026-10-24/. No hay envío ni persistencia de datos.
+
+Revisión independiente cerrada: búsqueda «consulta» prioriza reportes y el archivo rechazado se descarta sin borrar otros campos. Los casos de búsqueda se comprobaron en navegador y la recuperación con el controlador equivalente del ejemplo 5 usando un archivo de 6 MB. Sin hallazgos pendientes.

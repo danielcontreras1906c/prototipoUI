@@ -164,6 +164,8 @@ document.getElementById('section-search-form').addEventListener('submit', event 
     document.getElementById('points-form').reset(); closeDialogs(); location.hash = 'puntos';
   } else if (['aviso', 'cambio', 'campana'].some(term => query.includes(term))) {
     closeDialogs(); location.hash = 'avisos';
+  } else if (['reporte', 'consulta'].some(term => query.includes(term))) {
+    closeDialogs(); location.hash = 'reportes';
   } else if (Array.from(document.querySelectorAll('[data-material]')).some(item => normalize(item.textContent).includes(query))) {
     document.getElementById('guide-query').value = raw; setMaterialGroup('todos'); closeDialogs(); location.hash = 'preparacion';
   } else document.getElementById('search-options').hidden = false;

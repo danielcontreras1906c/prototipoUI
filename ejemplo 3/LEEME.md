@@ -41,3 +41,7 @@ El prototipo no se conecta a servicios municipales, no pide cuentas, no envía c
 Referencia municipal: https://www.municarrillo.go.cr/tag/servicios-basura/. Escudo, logo del pie y fuentes institucionales conservados del ejemplo 2. El pie del sitio de referencia indica licencia Creative Commons Attribution 4.0. Esta propuesta no implica aval municipal.
 
 Los iconos de los contenidos pertenecen a Lucide, paquete lucide-static versión 0.468.0. Se guardan localmente y se incorporan como SVG estático dentro del HTML. La licencia y las atribuciones correspondientes están en assets/iconos/LICENSE.txt. Referencia: https://lucide.dev/license.
+
+
+## Reportes y consultas (24 de octubre de 2026)
+Formulario local con tipo, comunidad, descripción y foto opcional de hasta 5 MB. Validación y resumen de prueba, sin envío, almacenamiento ni servidor de datos. Contenido estático en index.html; reportes.js controla estados. Copia previa en revision/antes-de-reportes-2026-10-24.
