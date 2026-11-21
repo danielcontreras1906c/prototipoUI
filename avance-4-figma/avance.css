@@ -225,8 +225,11 @@ input::placeholder { color: var(--quiet); opacity: 1; }
 
 .report-layout { display: grid; grid-template-columns: minmax(0,.65fr) minmax(0,1.35fr); gap: 40px; align-items: start; }
 .report-intro { border-top: 2px solid var(--green); padding-top: 16px; }
-.report-intro img, .completion-panel img { width: 16px; height: 16px; object-fit: contain; margin-bottom: 12px; }
+.report-intro > img, .completion-panel img { width: 16px; height: 16px; object-fit: contain; margin-bottom: 12px; }
 .report-intro p, .report-instructions { color: var(--secondary); }
+.report-guide { margin: 0; }
+.report-guide img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--control); background: var(--shade); }
+.report-guide figcaption { margin-top: 8px; color: var(--secondary); font-size: 14px; }
 .report-instructions { display: grid; gap: 8px; padding-inline-start: 24px; }
 .report-panel { padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--panel); }
 .report-fields, .review-panel dl { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -302,6 +305,7 @@ dialog li + li { margin-top: 4px; }
   .hero-copy h1 { font-size: clamp(38px, 8.5vw, 56px); max-width: 14ch; }
   .hero-copy > p:not(.field-error) { font-size: 17px; margin-bottom: 16px; }
   .coast-photo { aspect-ratio: 2 / 1; }
+  .report-guide img { aspect-ratio: 16 / 9; max-height: 230px; }
   .home-bottom { margin-top: 24px; padding-top: 24px; }
   .notice-ribbon { padding: 12px 16px; }
   .notice-filters { grid-template-columns: 1fr 1fr; }

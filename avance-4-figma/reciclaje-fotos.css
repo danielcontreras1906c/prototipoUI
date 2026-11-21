@@ -1,0 +1,22 @@
+.photo-guide .avance-header-inner {
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+
+.guide-return {
+  flex: none;
+  font-size: 14px;
+}
+
+.material-thumbnail {
+  flex: none;
+  width: 76px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: var(--control);
+  background: var(--shade);
+}
+
+@media (max-width: 720px) {
+  .material-thumbnail { width: 56px; height: 42px; }
+}
