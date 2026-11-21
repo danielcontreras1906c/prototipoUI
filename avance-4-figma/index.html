@@ -9,10 +9,11 @@
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="avance.css?v=lectura">
   <link rel="stylesheet" href="lectura-facil.css" id="lectura-style" media="not all">
+  <link rel="stylesheet" href="movil.css">
   <script src="vendor/leaflet/leaflet.js" defer></script>
   <script src="mapa.js" defer></script>
-  <script src="modo-adulto-mayor.js" defer></script>
-  <script src="app.js?v=lectura" defer></script>
+  <script src="modo-adulto-mayor.js?v=movil" defer></script>
+  <script src="app.js?v=movil" defer></script>
 </head>
 <body>
 <svg class="material-symbols" aria-hidden="true" focusable="false">
@@ -38,19 +39,19 @@
         <span>Municipalidad de Carrillo<small>Servicios de basura y reciclaje</small></span>
       </a>
       <button class="mobile-menu" id="menu-button" type="button" aria-controls="service-tabs" aria-expanded="false">
-        <img src="assets/iconos/bars.svg" width="16" height="16" alt="">Menú
+        <img src="assets/iconos/bars.svg" width="16" height="16" alt=""><span id="menu-label">Menú</span>
       </button>
       <div class="reading-control" id="reading-control" hidden>
         <button class="btn reading-toggle" id="reading-toggle" type="button">Activar modo adulto mayor</button>
         <span class="visually-hidden" id="reading-status" role="status"></span>
       </div>
       <nav id="service-tabs" class="section-tabs" aria-label="Servicios de basura y reciclaje">
-      <a href="#inicio" data-screen-link="inicio" aria-current="page"><span>Inicio</span></a>
-      <a href="#rutas" data-screen-link="rutas"><span data-texto-ampliado="Cuándo pasa el camión">Rutas y horarios</span></a>
-      <a href="#reciclaje" data-screen-link="reciclaje"><span>Cómo reciclar</span></a>
-      <a href="#centros" data-screen-link="centros"><span data-texto-ampliado="Dónde llevar el reciclaje">Centros de acopio</span></a>
-      <a href="#avisos" data-screen-link="avisos"><span data-texto-ampliado="Avisos">Avisos y campañas</span></a>
-      <a href="#reportes" data-screen-link="reportes"><span data-texto-ampliado="Hacer un reporte">Reportes y consultas</span></a>
+      <a href="#inicio" data-screen-link="inicio" aria-current="page"><img class="mobile-tab-icon" src="assets/iconos/house.svg" width="18" height="18" alt=""><span>Inicio</span></a>
+      <a href="#rutas" data-screen-link="rutas"><img class="mobile-tab-icon" src="assets/iconos/calendar-days.svg" width="18" height="18" alt=""><span data-texto-ampliado="Cuándo pasa el camión">Rutas y horarios</span></a>
+      <a href="#reciclaje" data-screen-link="reciclaje"><img class="mobile-tab-icon" src="assets/iconos/recycle.svg" width="18" height="18" alt=""><span>Cómo reciclar</span></a>
+      <a href="#centros" data-screen-link="centros"><img class="mobile-tab-icon" src="assets/iconos/location-dot.svg" width="18" height="18" alt=""><span data-texto-ampliado="Dónde llevar el reciclaje">Centros de acopio</span></a>
+      <a href="#avisos" data-screen-link="avisos"><img class="mobile-tab-icon" src="assets/iconos/bell.svg" width="18" height="18" alt=""><span data-texto-ampliado="Avisos">Avisos y campañas</span></a>
+      <a href="#reportes" data-screen-link="reportes"><img class="mobile-tab-icon" src="assets/iconos/clipboard-list.svg" width="18" height="18" alt=""><span data-texto-ampliado="Hacer un reporte">Reportes y consultas</span></a>
     </nav>
     </div>
   </header>

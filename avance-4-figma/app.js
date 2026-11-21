@@ -36,6 +36,7 @@ document.querySelectorAll('dialog').forEach(dialog => {
 function setMenu(open) {
   byId('menu-button').setAttribute('aria-expanded', String(open));
   byId('service-tabs').classList.toggle('is-open', open);
+  if (mobilePreview) byId('menu-label').textContent = open ? 'Cerrar' : 'Menú';
 }
 
 function showScreen(id, focus = true) {
@@ -305,6 +306,35 @@ byId('reading-route-reset').addEventListener('click', () => {
   byId('route-community').focus();
 });
 byId('menu-button').addEventListener('click', event => setMenu(event.currentTarget.getAttribute('aria-expanded') !== 'true'));
+if (mobilePreview) {
+  const menuButton = byId('menu-button');
+  const header = menuButton.closest('header');
+  const menu = byId('service-tabs');
+  const mobileWidth = window.matchMedia('(max-width: 720px)');
+  const menuIsOpen = () => menu.classList.contains('is-open');
+
+  mobileWidth.addEventListener('change', () => setMenu(false));
+  document.addEventListener('pointerdown', event => {
+    if (menuIsOpen() && !header.contains(event.target)) {
+      if (menu.contains(document.activeElement)) menuButton.focus({preventScroll: true});
+      setMenu(false);
+    }
+  });
+  document.addEventListener('focusin', event => {
+    if (menuIsOpen() && !header.contains(event.target) && !event.target.closest('dialog')) setMenu(false);
+  });
+  header.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !menuIsOpen()) return;
+    setMenu(false);
+    menuButton.focus({preventScroll: true});
+  });
+  menu.addEventListener('click', event => {
+    if (menuIsOpen() && event.target.closest('[aria-current="page"]')) {
+      setMenu(false);
+      menuButton.focus({preventScroll: true});
+    }
+  });
+}
 byId('material-query').addEventListener('input', filterMaterials);
 byId('reset-materials').addEventListener('click', () => {
   byId('material-query').value = '';

@@ -1,9 +1,11 @@
 'use strict';
 
 const readingUrl = new URL(location.href);
+const mobilePreview = readingUrl.searchParams.get('vista') === 'movil';
 const readingParameter = readingUrl.searchParams.get('lectura');
-const readingAvailable = readingParameter === 'normal' || readingParameter === 'ampliada';
+const readingAvailable = mobilePreview || readingParameter === 'normal' || readingParameter === 'ampliada';
 let readingActive = readingParameter === 'ampliada';
+document.documentElement.toggleAttribute('data-vista-movil', mobilePreview);
 
 function setReadingMode(active) {
   readingActive = active;
@@ -40,6 +42,7 @@ function initReadingMode() {
   if (!readingAvailable) return;
   byId('reading-control').hidden = false;
   byId('reading-toggle').addEventListener('click', () => {
+    if (mobilePreview) setMenu(false);
     setReadingMode(!readingActive);
     const current = new URL(location.href);
     current.searchParams.set('lectura', readingActive ? 'ampliada' : 'normal');
