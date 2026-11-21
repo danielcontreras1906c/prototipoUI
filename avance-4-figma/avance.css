@@ -336,3 +336,15 @@ dialog li + li { margin-top: 4px; }
   .pickup-row .pending { grid-column: 2; }
 }
 @media (prefers-reduced-motion: reduce) { .btn, .button, .mobile-menu { transition: none; } }
+
+/* La versión del índice activa este control solo cuando se abre con el parámetro lectura. */
+html:not([data-lectura-ampliada]) [data-lectura-only],
+html[data-lectura-ampliada] [data-vista-normal] { display: none !important; }
+.reading-control { margin-inline-start: auto; }
+.reading-control .reading-toggle { min-height: 48px; text-align: center; }
+.avance-header-inner:has(.reading-control:not([hidden])) { flex-wrap: wrap; gap: 8px 16px; padding-block-start: 10px; }
+.avance-header-inner:has(.reading-control:not([hidden])) .section-tabs { flex: 1 0 100%; }
+@media (max-width: 720px) {
+  .reading-control { flex-basis: 100%; margin-inline-start: 0; }
+  .reading-control .reading-toggle { width: 100%; }
+}
