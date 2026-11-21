@@ -10,6 +10,14 @@
   <script src="app.js" defer></script>
 </head>
 <body>
+<svg class="material-symbols" aria-hidden="true" focusable="false">
+  <symbol id="icon-material-carton" viewBox="0 0 24 24"><path d="M7 3h7l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h4M8 12h7m-7 4h7"/></symbol>
+  <symbol id="icon-material-plastico" viewBox="0 0 24 24"><path d="M10 3h4v4l3 4v8a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-8l3-4V3Zm-1 0h6M7 12h10m-10 4h10"/></symbol>
+  <symbol id="icon-material-metal" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="6" ry="2.5"/><path d="M6 5.5v13c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-13M9 11v5m2-10.5h2"/></symbol>
+  <symbol id="icon-material-vidrio" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="4" rx="1"/><path d="M7 7v1.5L5 11v7a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-7l-2-2.5V7M8 12v5"/></symbol>
+  <symbol id="icon-material-electronicos" viewBox="0 0 24 24"><path d="M5 16V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10m-14 0-3 3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1l-3-3Zm5 2h4"/></symbol>
+  <symbol id="icon-material-muebles" viewBox="0 0 24 24"><path d="M5 11V8a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v3M5 18v3m14-3v3M6 15v-2a2 2 0 0 0-4 0v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a2 2 0 0 0-4 0v2Z"/></symbol>
+</svg>
   <a class="skip-link" href="#contenido">Omitir e ir al contenido</a>
   <header class="avance-header">
     <div class="avance-header-inner">
@@ -124,16 +132,16 @@
     <section id="reciclaje" class="screen" data-screen aria-labelledby="recycling-title">
       <div class="screen-heading with-search"><div><h1 id="recycling-title">¿Cómo separar tus residuos?</h1><p>Separá los materiales y revisá cómo prepararlos para la entrega.</p></div><div class="compact-search"><label class="visually-hidden" for="material-query">Buscar material</label><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg><input id="material-query" type="search" placeholder="Buscar material…"></div></div>
       <div class="recycling-grid">
-        <article class="recycle-card paper" data-material-card data-name="papel carton periodicos cajas hojas revistas"><h2>Papel y cartón</h2><ul><li>Periódicos y hojas</li><li>Cajas plegadas</li><li>Papel limpio y seco</li></ul><button class="btn material-button" type="button" data-open="material-carton">Ver preparación</button></article>
-        <article class="recycle-card plastic" data-material-card data-name="plastico botellas envases tapas"><h2>Plástico</h2><ul><li>Botellas vacías</li><li>Envases sin restos</li><li>Tapas, según recepción</li></ul><button class="btn material-button" type="button" data-open="material-plastico">Ver preparación</button></article>
-        <article class="recycle-card metal" data-material-card data-name="metal latas aluminio"><h2>Metales</h2><ul><li>Latas de bebidas</li><li>Envases metálicos vacíos</li><li>Según condiciones del receptor</li></ul><button class="btn material-button" type="button" data-open="material-metal">Ver preparación</button></article>
-        <article class="recycle-card glass" data-material-card data-name="vidrio botellas frascos"><h2>Vidrio</h2><ul><li>Botellas y frascos</li><li>Envases protegidos</li><li>Confirmar el tipo de vidrio</li></ul><button class="btn material-button" type="button" data-open="material-vidrio">Ver preparación</button></article>
+        <article class="recycle-card paper" data-material-card data-name="papel carton periodicos cajas hojas revistas"><h2 id="material-carton-label"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-carton"></use></svg></span>Papel y cartón</h2><ul><li>Periódicos y hojas</li><li>Cajas plegadas</li><li>Papel limpio y seco</li></ul><button class="btn material-button" type="button" data-open="material-carton" aria-describedby="material-carton-label">Ver preparación</button></article>
+        <article class="recycle-card plastic" data-material-card data-name="plastico botellas envases tapas"><h2 id="material-plastico-label"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-plastico"></use></svg></span>Plástico</h2><ul><li>Botellas vacías</li><li>Envases sin restos</li><li>Tapas, según recepción</li></ul><button class="btn material-button" type="button" data-open="material-plastico" aria-describedby="material-plastico-label">Ver preparación</button></article>
+        <article class="recycle-card metal" data-material-card data-name="metal latas aluminio"><h2 id="material-metal-label"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-metal"></use></svg></span>Metales</h2><ul><li>Latas de bebidas</li><li>Envases metálicos vacíos</li><li>Según condiciones del receptor</li></ul><button class="btn material-button" type="button" data-open="material-metal" aria-describedby="material-metal-label">Ver preparación</button></article>
+        <article class="recycle-card glass" data-material-card data-name="vidrio botellas frascos"><h2 id="material-vidrio-label"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-vidrio"></use></svg></span>Vidrio</h2><ul><li>Botellas y frascos</li><li>Envases protegidos</li><li>Confirmar el tipo de vidrio</li></ul><button class="btn material-button" type="button" data-open="material-vidrio" aria-describedby="material-vidrio-label">Ver preparación</button></article>
       </div>
       <div class="sorting-guide">
         <div><h2>Va al reciclaje</h2><p>Botellas plásticas vacías, latas, cartón y papel limpios, frascos de vidrio.</p></div>
         <div><h2>Va a la basura ordinaria</h2><p>Pañales, papel higiénico y servilletas usadas, empaques de snacks y cerámica rota.</p><button type="button" class="plain-link" data-open="ordinary-examples">Ver ejemplos</button></div>
       </div>
-      <div class="special-materials"><article data-material-card data-name="electronicos computadora celular aparatos equipos laptop"><div><h2>Electrónicos</h2><p>Equipos que requieren una opción de entrega específica.</p></div><button class="plain-link" type="button" data-open="material-electronicos">Ver condiciones <svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></button></article><article data-material-card data-name="muebles sillones colchones voluminosos"><div><h2>Muebles</h2><p>Consultá tamaños, cantidades y jornadas autorizadas.</p></div><button class="plain-link" type="button" data-open="material-muebles">Ver condiciones <svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></button></article></div>
+      <div class="special-materials"><article data-material-card data-name="electronicos computadora celular aparatos equipos laptop"><div class="special-material-label"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-electronicos"></use></svg></span><div><h2 id="material-electronicos-label">Electrónicos</h2><p>Equipos que requieren una opción de entrega específica.</p></div></div><button class="plain-link" type="button" data-open="material-electronicos" aria-describedby="material-electronicos-label">Ver condiciones <svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></button></article><article data-material-card data-name="muebles sillones colchones voluminosos"><div class="special-material-label"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-muebles"></use></svg></span><div><h2 id="material-muebles-label">Muebles</h2><p>Consultá tamaños, cantidades y jornadas autorizadas.</p></div></div><button class="plain-link" type="button" data-open="material-muebles" aria-describedby="material-muebles-label">Ver condiciones <svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></button></article></div>
       <p class="result-line" id="material-count" role="status" aria-live="polite">6 materiales de referencia</p><p class="section-note">Consultá qué recipiente pide cada punto de entrega.</p><div id="materials-empty" class="empty-state" hidden><h2>No encontramos ese material</h2><p>Probá otro nombre o borrá la búsqueda para volver a la guía.</p><button class="btn secondary" type="button" id="reset-materials">Ver todos los materiales</button></div>
     </section>
 
@@ -276,12 +284,166 @@
   <p>Separá las botellas vacías, las latas y el cartón limpio y seco. Confirmá qué materiales recibe el punto de entrega.</p>
   <button class="btn secondary" type="button" data-close>Volver a Cómo reciclar</button>
 </dialog>
-<dialog id="material-carton" class="material-dialog paper" aria-labelledby="material-carton-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="material-dialog-icon"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0zM256 0l0 128 128 0L256 0zM112 256l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64l160 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-160 0c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg></span><h2 id="material-carton-title">Papel y cartón</h2><div class="material-body"><h3>Preparación</h3><ol><li>Separá el papel y el cartón que tengan grasa o restos de comida.</li><li>Plegá las cajas para ocupar menos espacio.</li><li>Guardalos bajo techo para mantenerlos secos.</li></ol><h3>Bolsa o recipiente</h3><p>Una caja o recipiente seco. Confirmá si el punto solicita los materiales atados, en cajas o en otro recipiente.</p><p>No hay un color de bolsa municipal verificado en este prototipo.</p><a href="#centros" data-material-filter="carton">Buscar dónde entregar papel y cartón</a></div><p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p></dialog>
-<dialog id="material-plastico" class="material-dialog plastic" aria-labelledby="material-plastico-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="material-dialog-icon"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M120 0l80 0c13.3 0 24 10.7 24 24l0 40L96 64l0-40c0-13.3 10.7-24 24-24zM32 167.5c0-19.5 10-37.6 26.6-47.9l15.8-9.9C88.7 100.7 105.2 96 122.1 96l75.8 0c16.9 0 33.4 4.7 47.7 13.7l15.8 9.9C278 129.9 288 148 288 167.5c0 17-7.5 32.3-19.4 42.6C280.6 221.7 288 238 288 256c0 19.1-8.4 36.3-21.7 48c13.3 11.7 21.7 28.9 21.7 48s-8.4 36.3-21.7 48c13.3 11.7 21.7 28.9 21.7 48c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64c0-19.1 8.4-36.3 21.7-48C40.4 388.3 32 371.1 32 352s8.4-36.3 21.7-48C40.4 292.3 32 275.1 32 256c0-18 7.4-34.3 19.4-45.9C39.5 199.7 32 184.5 32 167.5zM96 240c0 8.8 7.2 16 16 16l96 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-96 0c-8.8 0-16 7.2-16 16zm16 112c-8.8 0-16 7.2-16 16s7.2 16 16 16l96 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-96 0z"/></svg></span><h2 id="material-plastico-title">Plástico</h2><div class="material-body"><h3>Preparación</h3><ol><li>Vaciá los envases y retirales los restos.</li><li>Si hace falta, enjuagá y dejá secar.</li><li>Separalos de los demás materiales.</li></ol><h3>Bolsa o recipiente</h3><p>Un recipiente limpio y seco. Confirmá si las tapas se reciben juntas o separadas y qué envases acepta el receptor.</p><p>No hay un color de bolsa municipal verificado en este prototipo.</p><a href="#centros" data-material-filter="plastico">Buscar dónde entregar plástico</a></div><p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p></dialog>
-<dialog id="material-metal" class="material-dialog metal" aria-labelledby="material-metal-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="material-dialog-icon"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M32 32C32 14.3 46.3 0 64 0L256 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L64 64C46.3 64 32 49.7 32 32zM0 160c0-35.3 28.7-64 64-64l192 0c35.3 0 64 28.7 64 64l0 288c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 160zm96 64c-17.7 0-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l128 0c17.7 0 32-14.3 32-32l0-96c0-17.7-14.3-32-32-32L96 224z"/></svg></span><h2 id="material-metal-title">Metales</h2><div class="material-body"><h3>Preparación</h3><ol><li>Vaciá los envases y retirales los restos.</li><li>Dejá secar y mantenelos separados.</li><li>Evitá manipular bordes cortantes.</li></ol><h3>Bolsa o recipiente</h3><p>Confirmá el recipiente con el punto de entrega. Los aerosoles y envases con sustancias peligrosas requieren consultar condiciones específicas.</p><a href="#centros" data-material-filter="metal">Buscar dónde entregar latas y metales</a></div><p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p></dialog>
-<dialog id="material-vidrio" class="material-dialog glass" aria-labelledby="material-vidrio-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="material-dialog-icon"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z"/></svg></span><h2 id="material-vidrio-title">Vidrio</h2><div class="material-body"><h3>Preparación</h3><ol><li>Vaciá y limpiá los envases.</li><li>Separá el vidrio de otros materiales.</li><li>Protegé los envases de golpes y consultá si el receptor acepta ese tipo de vidrio.</li></ol><h3>Bolsa o recipiente</h3><p>Un recipiente resistente. No coloqués vidrio suelto en bolsas que se puedan romper. Consultá por separado sobre espejos, cerámica, bombillos o vidrio roto.</p><a href="#centros" data-material-filter="vidrio">Buscar dónde entregar vidrio</a></div><p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p></dialog>
-<dialog id="material-electronicos" class="material-dialog special" aria-labelledby="material-electronicos-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="material-dialog-icon"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M128 32C92.7 32 64 60.7 64 96l0 256 64 0 0-256 384 0 0 256 64 0 0-256c0-35.3-28.7-64-64-64L128 32zM19.2 384C8.6 384 0 392.6 0 403.2C0 445.6 34.4 480 76.8 480l486.4 0c42.4 0 76.8-34.4 76.8-76.8c0-10.6-8.6-19.2-19.2-19.2L19.2 384z"/></svg></span><h2 id="material-electronicos-title">Electrónicos</h2><div class="material-body"><h3>Preparación</h3><ol><li>Guardá los equipos en un lugar seco.</li><li>Consultá cuáles equipos recibe la campaña o el gestor.</li><li>Coordiná la entrega y confirmá si deben llevarse completos.</li></ol><h3>Bolsa o recipiente</h3><p>No hay una bolsa definida en el prototipo. Consultá cómo proteger y transportar los equipos.</p><p>No se confirma recepción en el camión ordinario. No dejés equipos en la vía pública.</p><a href="#avisos" data-campaign data-close>Buscar dónde entregar electrónicos</a></div><p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p></dialog>
-<dialog id="material-muebles" class="material-dialog special" aria-labelledby="material-muebles-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="material-dialog-icon"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M64 160C64 89.3 121.3 32 192 32l256 0c70.7 0 128 57.3 128 128l0 33.6c-36.5 7.4-64 39.7-64 78.4l0 48-384 0 0-48c0-38.7-27.5-71-64-78.4L64 160zM544 272c0-20.9 13.4-38.7 32-45.3c5-1.8 10.4-2.7 16-2.7c26.5 0 48 21.5 48 48l0 176c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32L96 448c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32L0 272c0-26.5 21.5-48 48-48c5.6 0 11 1 16 2.7c18.6 6.6 32 24.4 32 45.3l0 48 0 32 32 0 384 0 32 0 0-32 0-48z"/></svg></span><h2 id="material-muebles-title">Muebles</h2><div class="material-body"><h3>Preparación</h3><ol><li>Consultá si hay una jornada o un gestor que reciba ese residuo.</li><li>Confirmá tamaños, cantidades y condiciones.</li><li>Coordiná el traslado en la fecha y el lugar autorizados.</li></ol><h3>Bolsa o recipiente</h3><p>No se usa una bolsa común. El receptor debe indicar cómo entregar cada objeto.</p><p>No se confirma recepción en el camión ordinario. No dejés muebles en lotes ni aceras.</p><a href="#avisos" data-campaign data-close>Buscar dónde entregar muebles</a></div><p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p></dialog>
+<dialog id="material-carton" class="material-dialog paper" aria-labelledby="material-carton-title">
+  <button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button>
+  <h2 id="material-carton-title"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-carton"></use></svg></span>Papel y cartón</h2>
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/carton-limpio.webp" width="640" height="320" alt="Una mano quita cinta de una caja de cartón." loading="lazy" decoding="async">
+        <figcaption>Separá el papel y el cartón limpios.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/cajas-plegadas.webp" width="640" height="320" alt="Cajas aplanadas junto a una pila de hojas." loading="lazy" decoding="async">
+        <figcaption>Plegá las cajas y mantenelas secas.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Separá el papel y el cartón que tengan grasa o restos de comida.</li>
+      <li>Plegá las cajas para ocupar menos espacio.</li>
+      <li>Guardalos bajo techo para mantenerlos secos.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>Una caja o recipiente seco. Confirmá si el punto solicita los materiales atados, en cajas o en otro recipiente.</p>
+    <p>No hay un color de bolsa municipal verificado en este prototipo.</p>
+    <a href="#centros" data-material-filter="carton">Buscar dónde entregar papel y cartón</a>
+  </div>
+  <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+</dialog>
+<dialog id="material-plastico" class="material-dialog plastic" aria-labelledby="material-plastico-title">
+  <button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button>
+  <h2 id="material-plastico-title"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-plastico"></use></svg></span>Plástico</h2>
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/botella-enjuague.webp" width="640" height="320" alt="Una botella plástica bajo el chorro del grifo." loading="lazy" decoding="async">
+        <figcaption>Vaciá y enjuagá si hace falta.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/botellas-escurridas.webp" width="640" height="320" alt="Botellas plásticas boca abajo en un escurridor." loading="lazy" decoding="async">
+        <figcaption>Dejá secar por completo.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Vaciá los envases y retirales los restos.</li>
+      <li>Si hace falta, enjuagá y dejá secar.</li>
+      <li>Separalos de los demás materiales.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>Un recipiente limpio y seco. Confirmá si las tapas se reciben juntas o separadas y qué envases acepta el receptor.</p>
+    <p>No hay un color de bolsa municipal verificado en este prototipo.</p>
+    <a href="#centros" data-material-filter="plastico">Buscar dónde entregar plástico</a>
+  </div>
+  <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+</dialog>
+<dialog id="material-metal" class="material-dialog metal" aria-labelledby="material-metal-title">
+  <button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button>
+  <h2 id="material-metal-title"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-metal"></use></svg></span>Metales</h2>
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/lata-vaciado.webp" width="640" height="320" alt="Una lata de aluminio inclinada sobre el fregadero." loading="lazy" decoding="async">
+        <figcaption>Vaciá la lata y retirale los restos.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/latas-secado.webp" width="640" height="320" alt="Latas intactas boca abajo en un escurridor." loading="lazy" decoding="async">
+        <figcaption>Dejalas secar y juntalas con otros metales.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Vaciá los envases y retirales los restos.</li>
+      <li>Dejá secar y mantenelos separados.</li>
+      <li>Evitá manipular bordes cortantes.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>Confirmá el recipiente con el punto de entrega. Los aerosoles y envases con sustancias peligrosas requieren consultar condiciones específicas.</p>
+    <a href="#centros" data-material-filter="metal">Buscar dónde entregar latas y metales</a>
+  </div>
+  <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+</dialog>
+<dialog id="material-vidrio" class="material-dialog glass" aria-labelledby="material-vidrio-title">
+  <button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button>
+  <h2 id="material-vidrio-title"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-vidrio"></use></svg></span>Vidrio</h2>
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/frasco-enjuague.webp" width="640" height="320" alt="Una mano enjuaga un frasco de vidrio bajo el grifo." loading="lazy" decoding="async">
+        <figcaption>Vaciá y limpiá los frascos.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/frascos-protegidos.webp" width="640" height="320" alt="Frascos de pie en una caja con divisiones de cartón." loading="lazy" decoding="async">
+        <figcaption>Protegé los frascos para que no choquen.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Vaciá y limpiá los envases.</li>
+      <li>Separá el vidrio de otros materiales.</li>
+      <li>Protegé los envases de golpes y consultá si el receptor acepta ese tipo de vidrio.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>Un recipiente resistente. No coloqués vidrio suelto en bolsas que se puedan romper. Consultá por separado sobre espejos, cerámica, bombillos o vidrio roto.</p>
+    <a href="#centros" data-material-filter="vidrio">Buscar dónde entregar vidrio</a>
+  </div>
+  <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+</dialog>
+<dialog id="material-electronicos" class="material-dialog special" aria-labelledby="material-electronicos-title">
+  <button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button>
+  <h2 id="material-electronicos-title"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-electronicos"></use></svg></span>Electrónicos</h2>
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/equipo-seco.webp" width="640" height="320" alt="Portátil cerrada sobre una mesa seca." loading="lazy" decoding="async">
+        <figcaption>Guardá el equipo en un lugar seco.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/equipo-protegido.webp" width="640" height="320" alt="Portátil y cargador protegidos dentro de una caja." loading="lazy" decoding="async">
+        <figcaption>Confirmá cómo llevar el equipo y sus accesorios.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Guardá los equipos en un lugar seco.</li>
+      <li>Consultá cuáles equipos recibe la campaña o el gestor.</li>
+      <li>Coordiná la entrega y confirmá si deben llevarse completos.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>No hay una bolsa definida en el prototipo. Consultá cómo proteger y transportar los equipos.</p>
+    <p>No se confirma recepción en el camión ordinario. No dejés equipos en la vía pública.</p>
+    <a href="#avisos" data-campaign data-close>Buscar dónde entregar electrónicos</a>
+  </div>
+  <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+</dialog>
+<dialog id="material-muebles" class="material-dialog special" aria-labelledby="material-muebles-title">
+  <button class="dialog-close" type="button" data-close aria-label="Cerrar preparación"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button>
+  <h2 id="material-muebles-title"><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-muebles"></use></svg></span>Muebles</h2>
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/sillon-medidas.webp" width="640" height="320" alt="Cinta métrica extendida a lo ancho de un sillón." loading="lazy" decoding="async">
+        <figcaption>Medí el mueble para confirmar si lo reciben.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/sillon-traslado.webp" width="640" height="320" alt="Sillón cubierto con una manta y protectores de cartón." loading="lazy" decoding="async">
+        <figcaption>Prepará el mueble cuando coordinés el traslado.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Consultá si hay una jornada o un gestor que reciba ese residuo.</li>
+      <li>Confirmá tamaños, cantidades y condiciones.</li>
+      <li>Coordiná el traslado en la fecha y el lugar autorizados.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>No se usa una bolsa común. El receptor debe indicar cómo entregar cada objeto.</p>
+    <p>No se confirma recepción en el camión ordinario. No dejés muebles en lotes ni aceras.</p>
+    <a href="#avisos" data-campaign data-close>Buscar dónde entregar muebles</a>
+  </div>
+  <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+</dialog>
   <noscript><p class="service-container soft-tip">Activá JavaScript para usar los filtros, los mapas y la simulación del formulario. Todo el contenido de las pantallas está escrito en HTML.</p></noscript>
 <dialog id="sample-description" aria-labelledby="sample-description-title">
   <h2 id="sample-description-title">Descripción de ejemplo</h2>
