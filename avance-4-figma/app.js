@@ -43,6 +43,7 @@ function showScreen(id, focus = true) {
   closeDialog();
   setMenu(false);
   screens.forEach(screen => { screen.hidden = screen.id !== id; });
+  activateCarrilloMap(screens[index]);
   tabs.forEach(tab => {
     if (tab.dataset.screenLink === id) tab.setAttribute('aria-current', 'page');
     else tab.removeAttribute('aria-current');
@@ -130,7 +131,9 @@ function filterCenters() {
     const searchable = normalize(card.textContent + ' ' + card.dataset.materials);
     const visible = query.every(word => searchable.includes(word));
     card.hidden = !visible;
-    document.querySelector('[data-map-center="' + card.dataset.center + '"]').hidden = !visible;
+    document.querySelectorAll('[data-map-center="' + card.dataset.center + '"]').forEach(pin => {
+      pin.hidden = !visible;
+    });
     if (visible) count++;
   });
   const campaign = query.some(word => /belen|electronico|mueble/.test(word));
@@ -278,9 +281,8 @@ document.addEventListener('click', event => {
     return;
   }
   if (target.closest('[data-recenter]')) {
-    const map = target.closest('.map-panel').querySelector('.fig-map');
-    map.scrollTo(0, 0);
-    map.focus({preventScroll:true});
+    recenterCarrilloMap(target.closest('.map-panel'));
+    return;
   }
   if (target.closest('[data-cancel-report]')) {
     pendingDestination = '';
