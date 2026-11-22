@@ -45,7 +45,7 @@ a { text-decoration-thickness: 2px; text-underline-offset: .22em; }
 .btn, .button, .mobile-menu { padding: 10px 16px; font-weight: 700; }
 .btn.secondary, .button.outline, .mobile-menu, input, select { border-color: var(--field-border); }
 input, select { padding-block: 10px; }
-.field label, .community-field > span, #description-label {
+.field label, .field .field-label, .community-field > span, #description-label {
   margin-bottom: 6px;
   font-size: 1.125rem;
   font-weight: 700;

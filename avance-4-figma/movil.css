@@ -7,7 +7,8 @@
     --mobile-card: 14px;
     --mobile-tap: 48px;
     --mobile-padding: 16px;
-    scroll-padding-block-start: 136px;
+    --reading-row: calc(var(--mobile-tap) + 14px); /* borde 4px + relleno 8px + botón + 2px */
+    scroll-padding-block-start: 76px;
     -webkit-tap-highlight-color: #195a4126;
 
     & .avance-header {
@@ -16,13 +17,15 @@
       z-index: 10;
       background: var(--surface);
     }
+    /* Al desplazarse, la barra del modo sale de vista y solo queda fija la fila del logo y el menú. */
+    & .avance-header:has(.reading-control:not([hidden])) { top: calc(-1 * var(--reading-row)); }
     & .skip-link:focus { z-index: 11; }
     & .avance-header-inner:has(.reading-control:not([hidden])) {
       width: calc(100% - 2 * var(--edge));
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      gap: 0 10px;
-      padding-block: 8px 0;
+      gap: 8px 10px;
+      padding-block: 8px 6px;
     }
     & .municipal-brand { font-size: 1rem; }
     & .municipal-brand img { width: 36px; height: 36px; flex: none; }
@@ -36,9 +39,10 @@
       border-color: var(--line);
     }
     & .mobile-menu[aria-expanded="true"] { background: var(--green-pale); border-color: var(--green); }
+    /* El botón del modo va arriba, como barra de accesibilidad, para que sea lo que sale de vista al desplazarse. */
     & .reading-control {
       grid-column: 1 / -1;
-      padding-block: 6px 8px;
+      grid-row: 1;
     }
     & .reading-control .reading-toggle {
       min-height: var(--mobile-tap);
@@ -91,7 +95,7 @@
     & .hero-copy h1 { font-size: clamp(2.375rem, 9.2vw, 3.125rem); max-width: 16ch; margin-bottom: 12px; }
     & .hero-copy > p:not(.field-error) { margin-bottom: 18px; max-width: 38ch; }
     & .community-search { max-width: none; }
-    & .community-search label { margin-bottom: 6px; font-size: 1rem; }
+    & :is(.community-search label, .community-label) { margin-bottom: 6px; font-size: 1rem; }
     & .search-controls { gap: 8px; }
     & .search-controls .btn { padding-inline: 12px; }
     & .hero-copy > .plain-link { margin-top: 8px; width: 100%; justify-content: center; text-align: center; }
@@ -125,6 +129,8 @@
     & .calendar-location { justify-content: flex-start; column-gap: 10px; }
     & .calendar-panel .pickup { border-radius: 0 var(--control) var(--control) 0; }
     & .pickup-row { column-gap: 8px; }
+    & :is(.calendar-alert, .pickup-row) a { display: inline-flex; align-items: center; min-height: 44px; }
+    & .calendar-alert { align-items: center; padding-block: 4px; }
     & .panel-heading { gap: 4px 12px; }
     & .map-panel .panel-heading a { display: inline-flex; align-items: center; min-height: 44px; }
     & .fig-map, & .live-map { height: clamp(250px, 66vw, 340px); border-radius: var(--control); }
@@ -220,6 +226,17 @@
     & .report-fields, & .review-panel dl { grid-template-columns: minmax(0, 1fr); gap: 0; }
     & .report-actions, & .dialog-actions { display: grid; grid-template-columns: minmax(0, 1fr); }
     & .report-actions > :last-child { margin-inline-start: 0; }
+    /* En celular, la acción principal va primero y Cancelar queda como enlace de texto. */
+    & .report-actions > .btn:not(.secondary) { order: -1; }
+    & .report-actions > [data-cancel-report] {
+      justify-self: center;
+      border: 0;
+      background: none;
+      color: var(--green);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    & .report-panel .field-error { margin: 6px 0 0; font-weight: 600; }
     & .step-footer { gap: 8px; }
 
     & dialog {
