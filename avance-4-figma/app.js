@@ -43,7 +43,10 @@ document.querySelectorAll('dialog').forEach(dialog => {
 function setMenu(open) {
   byId('menu-button').setAttribute('aria-expanded', String(open));
   byId('service-tabs').classList.toggle('is-open', open);
-  if (mobilePreview) byId('menu-label').textContent = open ? 'Cerrar' : 'Menú';
+  if (mobilePreview) {
+    byId('menu-label').textContent = open ? 'Cerrar' : 'Menú';
+    byId('menu-icon').src = open ? 'assets/iconos/xmark.svg' : 'assets/iconos/bars.svg';
+  }
 }
 
 function showScreen(id, focus = true) {
@@ -111,7 +114,7 @@ function setReportCommunity(value) {
 function pickerValue(target) {
   if (target === 'notice') return byId('notice-community').value;
   if (target === 'report') return byId('report-community').value;
-  return readingActive ? selectedLocality : selectedLocality || 'Sardinal|Sardinal';
+  return selectedLocality;
 }
 
 function openCommunityPicker(target) {
@@ -171,46 +174,104 @@ function syncHash() {
   showScreen(target, Boolean(activeScreen));
 }
 
-// Horarios de ejemplo por distrito. Las localidades sin ruta asignada muestran el estado pendiente.
+// Horarios de ejemplo por distrito: un día fijo por semana. La próxima fecha se calcula desde hoy.
 const sampleSchedules = {
-  Sardinal: {date: '2026-10-27', day: '27', weekday: 'Martes', long: 'Martes 27 de octubre de 2026', hours: '6:00 a. m. a 12:00 m. d.', hoursLong: 'De 6:00 de la mañana a 12:00 del mediodía'},
-  Filadelfia: {date: '2026-10-28', day: '28', weekday: 'Miércoles', long: 'Miércoles 28 de octubre de 2026', hours: '6:00 a. m. a 12:00 m. d.', hoursLong: 'De 6:00 de la mañana a 12:00 del mediodía'},
-  Palmira: {date: '2026-10-29', day: '29', weekday: 'Jueves', long: 'Jueves 29 de octubre de 2026', hours: '7:00 a. m. a 1:00 p. m.', hoursLong: 'De 7:00 de la mañana a 1:00 de la tarde'},
-  Belén: {date: '2026-10-30', day: '30', weekday: 'Viernes', long: 'Viernes 30 de octubre de 2026', hours: '6:00 a. m. a 12:00 m. d.', hoursLong: 'De 6:00 de la mañana a 12:00 del mediodía'},
+  Sardinal: {weekday: 1, hours: '6:00 a. m. a 12:00 m. d.', hoursLong: 'De 6:00 de la mañana a 12:00 del mediodía'},
+  Filadelfia: {weekday: 3, hours: '6:00 a. m. a 12:00 m. d.', hoursLong: 'De 6:00 de la mañana a 12:00 del mediodía'},
+  Palmira: {weekday: 4, hours: '7:00 a. m. a 1:00 p. m.', hoursLong: 'De 7:00 de la mañana a 1:00 de la tarde'},
+  Belén: {weekday: 5, hours: '6:00 a. m. a 12:00 m. d.', hoursLong: 'De 6:00 de la mañana a 12:00 del mediodía'},
 };
+// Cambio publicado en Avisos: la recolección del lunes 7 de diciembre pasa al martes 8.
+const scheduleChanges = {Sardinal: {from: '2026-12-07', to: '2026-12-08'}};
 const pendingLocalities = new Set(['Filadelfia|Ballena (parte)']);
+const weekdayNames = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+const monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const capitalize = text => text.charAt(0).toUpperCase() + text.slice(1);
+const isoDate = date => [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+const longDate = date => capitalize(weekdayNames[date.getDay()]) + ' ' + date.getDate() + ' de ' + monthNames[date.getMonth()] + ' de ' + date.getFullYear();
+
+function nextPickup(district) {
+  const schedule = sampleSchedules[district];
+  const date = new Date();
+  date.setHours(0, 0, 0, 0);
+  while (date.getDay() !== schedule.weekday) date.setDate(date.getDate() + 1);
+  const change = scheduleChanges[district];
+  if (change && isoDate(date) === change.from) {
+    const [year, month, day] = change.to.split('-').map(Number);
+    return {date: new Date(year, month - 1, day), changed: true};
+  }
+  return {date, changed: false};
+}
+
+function hasUpcomingChange(district) {
+  const change = scheduleChanges[district];
+  return Boolean(change) && change.to >= isoDate(new Date());
+}
+
+function weeklyText(district, changed) {
+  const day = weekdayNames[sampleSchedules[district].weekday];
+  return changed ? 'Esta semana cambia por un aviso. Normalmente pasa los ' + day + '.' : 'Pasa todos los ' + day + '.';
+}
+
+function renderScheduleList() {
+  const list = byId('schedule-list');
+  list.replaceChildren(...Object.keys(sampleSchedules).map(district => {
+    const schedule = sampleSchedules[district];
+    const {date, changed} = nextPickup(district);
+    const item = document.createElement('li');
+    item.innerHTML = '<div class="schedule-head"><h3></h3><span class="schedule-day"></span></div>'
+      + '<p class="schedule-hours"></p><p class="schedule-next"></p>'
+      + '<button class="plain-link" type="button"></button>';
+    item.querySelector('h3').textContent = district;
+    item.querySelector('.schedule-day').textContent = 'Todos los ' + weekdayNames[schedule.weekday];
+    item.querySelector('.schedule-hours').textContent = readingActive ? schedule.hoursLong : schedule.hours;
+    item.querySelector('.schedule-next').textContent = 'Próxima: ' + longDate(date).replace(/ de \d{4}$/, '').toLowerCase()
+      + (changed ? ' (cambio por aviso)' : '');
+    const button = item.querySelector('button');
+    button.dataset.locality = district + '|' + district;
+    button.textContent = 'Ver solo ' + district;
+    return item;
+  }));
+}
 
 function showSchedule(selection) {
   const [district] = selection.split('|');
-  const schedule = pendingLocalities.has(selection) ? null : sampleSchedules[district];
+  const showAll = !selection;
+  const schedule = showAll || pendingLocalities.has(selection) ? null : sampleSchedules[district];
+  byId('schedule-list').hidden = !showAll;
   byId('sardinal-pickup').hidden = !schedule;
-  byId('unknown-pickup').hidden = Boolean(schedule);
+  byId('unknown-pickup').hidden = showAll || Boolean(schedule);
+  byId('route-change').hidden = !hasUpcomingChange(showAll ? 'Sardinal' : district);
+  if (showAll) renderScheduleList();
   if (!schedule) return;
-  byId('pickup-tile').dateTime = schedule.date;
-  byId('pickup-day').textContent = schedule.day;
-  byId('pickup-summary').textContent = schedule.weekday + ' · ' + schedule.hours;
-  byId('pickup-date').dateTime = schedule.date;
-  byId('pickup-date').textContent = schedule.long;
+  const {date, changed} = nextPickup(district);
+  const weekday = capitalize(weekdayNames[date.getDay()]);
+  byId('pickup-tile').dateTime = isoDate(date);
+  byId('pickup-day').textContent = date.getDate();
+  byId('pickup-month').textContent = capitalize(monthNames[date.getMonth()].slice(0, 3)) + '.';
+  byId('pickup-summary').textContent = weekday + ' · ' + schedule.hours;
+  byId('pickup-date').dateTime = isoDate(date);
+  byId('pickup-date').textContent = longDate(date);
   byId('pickup-hours').textContent = schedule.hoursLong;
+  byId('pickup-weekly').textContent = weeklyText(district, changed);
+  byId('reading-pickup-weekly').textContent = weeklyText(district, changed);
 }
 
 function selectLocality(value) {
   selectedLocality = value;
-  const selection = value || 'Sardinal|Sardinal';
-  const [district, locality] = selection.split('|');
-  document.querySelectorAll('[data-community-name]').forEach(label => { label.textContent = locality; });
+  const [district, locality] = value ? value.split('|') : ['', ''];
+  byId('route-choice').textContent = value ? localityName(value) : 'Todas las comunidades';
+  byId('route-place').textContent = value ? locality : 'Todos los distritos';
+  byId('route-district').textContent = value ? 'Distrito de ' + district : Object.keys(sampleSchedules).length + ' horarios de ejemplo';
   byId('home-community-choice').textContent = value ? localityName(value) : 'Elegí tu comunidad';
-  byId('route-district').textContent = 'Distrito de ' + district;
-  byId('reading-route-choice').textContent = 'Filtro por comunidad: ' + locality;
+  byId('reading-route-choice').textContent = 'Mostrando el horario de ' + locality;
   byId('reading-route-choice').hidden = !value;
   byId('reading-route-reset').hidden = !value;
-  const routePrompt = byId('reading-route-button');
-  routePrompt.textContent = value ? 'Cambiar comunidad' : 'Filtrar por comunidad';
+  byId('reading-route-button').textContent = value ? 'Cambiar comunidad' : 'Elegir mi comunidad';
   byId('route-community').setAttribute('aria-labelledby', readingActive ? 'reading-route-button' : 'route-community-label route-choice');
-  showSchedule(selection);
-  byId('route-change').hidden = selection !== 'Sardinal|Sardinal';
-  document.querySelectorAll('[data-locality]').forEach(button => {
-    button.setAttribute('aria-pressed', String(button.dataset.locality === (readingActive ? value : selection)));
+  showSchedule(value);
+  document.querySelectorAll('.pin[data-locality]').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.dataset.locality === value));
   });
 }
 
@@ -222,40 +283,60 @@ function filterMaterials() {
     if (!card.hidden) count++;
   });
   byId('material-count').textContent = count + (count === 1 ? ' material' : ' materiales');
-  // Sin resultados, el aviso aparece junto al buscador y la guía general se oculta.
+  // Sin resultados, el aviso aparece junto al buscador. Si es basura ordinaria, lo dice directamente.
+  const typed = byId('material-query').value.trim();
+  const ordinary = count === 0 && query.some(word => ordinaryTerms.some(term => term.startsWith(word) || word.startsWith(term)));
   byId('materials-empty').hidden = count > 0;
-  byId('materials-empty-query').textContent = byId('material-query').value.trim();
-  document.querySelector('#reciclaje .sorting-guide').hidden = count === 0;
+  byId('materials-empty').classList.toggle('is-ordinary', ordinary);
+  byId('materials-empty-title').textContent = ordinary ? '«' + typed + '» va a la basura ordinaria' : 'No encontramos «' + typed + '»';
+  byId('materials-empty-text').textContent = ordinary
+    ? 'No se recicla. Sacalo con la basura ordinaria el día que pasa el camión.'
+    : 'Probá con otra palabra, como «botella», «lata» o «caja». Si es un aparato, un cable o algo con batería, revisá las condiciones de Electrónicos.';
+}
+
+const ordinaryTerms = ['panal', 'panales', 'papel higienico', 'higienico', 'servilleta', 'servilletas', 'snack', 'snacks',
+  'empaque', 'empaques', 'ceramica', 'toalla', 'toallas', 'toallitas', 'colilla', 'colillas', 'curita', 'curitas'];
+
+// Si la búsqueda es el nombre de una comunidad, devuelve su distrito.
+function districtForQuery(text) {
+  const query = normalize(text);
+  if (query.length < 3) return '';
+  const match = [...document.querySelectorAll('#district-directory [data-locality]')]
+    .find(button => normalize(button.textContent).includes(query));
+  return match ? match.dataset.locality.split('|')[0] : '';
 }
 
 function filterCenters() {
   const query = words(byId('center-query').value).filter(word => word !== 'y');
+  const district = normalize(districtForQuery(byId('center-query').value));
   let count = 0;
   document.querySelectorAll('[data-center]').forEach(card => {
     const searchable = normalize(card.textContent + ' ' + card.dataset.materials);
-    const visible = query.every(word => searchable.includes(word));
+    const visible = query.every(word => searchable.includes(word)) || (district && card.dataset.center === district);
     card.hidden = !visible;
     document.querySelectorAll('[data-map-center="' + card.dataset.center + '"]').forEach(pin => {
       pin.hidden = !visible;
     });
     if (visible) count++;
   });
-  const campaign = query.some(word => /belen|electronico|mueble/.test(word));
+  const campaign = district === 'belen' || query.some(word => /belen|electronico|mueble/.test(word));
   byId('campaign-callout').hidden = query.length > 0 && !campaign;
-  byId('center-count').textContent = count + (count === 1 ? ' centro' : ' centros');
+  byId('center-count').textContent = count + (count === 1 ? ' centro' : ' centros')
+    + (district && !query.every(word => district.includes(word)) ? ' en el distrito de ' + districtForQuery(byId('center-query').value) : '');
   byId('centers-empty').hidden = count > 0 || campaign;
 }
 
 function filterNotices() {
-  const parts = byId('notice-community').value.split('|');
-  const selected = parts[1] || '';
+  // Los avisos son por distrito: una comunidad ve los de su distrito.
+  const selected = byId('notice-community').value.split('|')[0] || '';
   const kind = byId('notice-kind').value;
   let count = 0;
   document.querySelectorAll('[data-notice]').forEach(card => {
     card.hidden = Boolean((selected && selected !== card.dataset.community) || (kind && kind !== card.dataset.kind));
     if (!card.hidden) count++;
   });
-  byId('notice-count').textContent = count + (count === 1 ? ' aviso' : ' avisos');
+  byId('notice-count').textContent = count + (count === 1 ? ' aviso' : ' avisos')
+    + (selected ? ' para el distrito de ' + selected : '');
   byId('notices-empty').hidden = count > 0;
 }
 

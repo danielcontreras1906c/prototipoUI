@@ -238,6 +238,10 @@
     }
     & .report-panel .field-error { margin: 6px 0 0; font-weight: 600; }
     & .step-footer { gap: 8px; }
+    & .step-footer .btn { min-height: var(--mobile-tap); }
+    & .dialog-actions > .btn:not(.secondary) { order: -1; }
+    & .materials-empty.is-ordinary { border-color: var(--green); background: var(--green-pale); }
+    & .schedule-list li { padding-block: 14px; }
 
     & dialog {
       width: min(560px, calc(100% - 20px));

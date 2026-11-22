@@ -235,3 +235,7 @@ dialog h2 { padding-inline-end: 52px; }
 @media (max-width: 420px) {
   .community-field #reading-route-reset { margin: 8px 0 0; }
 }
+
+.schedule-head h3 { font-size: 1.25rem; }
+.schedule-hours { font-weight: 600; }
+.schedule-next, .pickup-weekly { font-size: 1.0625rem; }
