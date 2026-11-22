@@ -181,6 +181,7 @@ const sampleSchedules = {
   Palmira: {weekday: 4, hours: '7:00 a. m. a 1:00 p. m.', hoursLong: 'De 7:00 de la mañana a 1:00 de la tarde'},
   Belén: {weekday: 5, hours: '6:00 a. m. a 12:00 m. d.', hoursLong: 'De 6:00 de la mañana a 12:00 del mediodía'},
 };
+const scheduleItems = [...byId('schedule-list').children];
 // Cambio publicado en Avisos: la recolección del lunes 7 de diciembre pasa al martes 8.
 const scheduleChanges = {Sardinal: {from: '2026-12-07', to: '2026-12-08'}};
 const pendingLocalities = new Set(['Filadelfia|Ballena (parte)']);
@@ -214,36 +215,33 @@ function weeklyText(district, changed) {
 }
 
 function renderScheduleList() {
-  const list = byId('schedule-list');
-  list.replaceChildren(...Object.keys(sampleSchedules).map(district => {
+  scheduleItems.forEach(item => {
+    const district = item.dataset.scheduleDistrict;
     const schedule = sampleSchedules[district];
     const {date, changed} = nextPickup(district);
-    const item = document.createElement('li');
-    item.innerHTML = '<div class="schedule-head"><h3></h3><span class="schedule-day"></span></div>'
-      + '<p class="schedule-hours"></p><p class="schedule-next"></p>'
-      + '<button class="plain-link" type="button"></button>';
-    item.querySelector('h3').textContent = district;
     item.querySelector('.schedule-day').textContent = 'Todos los ' + weekdayNames[schedule.weekday];
     item.querySelector('.schedule-hours').textContent = readingActive ? schedule.hoursLong : schedule.hours;
     item.querySelector('.schedule-next').textContent = 'Próxima: ' + longDate(date).replace(/ de \d{4}$/, '').toLowerCase()
       + (changed ? ' (cambio por aviso)' : '');
-    const button = item.querySelector('button');
-    button.dataset.locality = district + '|' + district;
-    button.textContent = 'Ver solo ' + district;
-    return item;
-  }));
+  });
 }
 
 function showSchedule(selection) {
   const [district] = selection.split('|');
   const showAll = !selection;
   const schedule = showAll || pendingLocalities.has(selection) ? null : sampleSchedules[district];
+  const feature = byId('schedule-feature');
   byId('schedule-list').hidden = !showAll;
   byId('sardinal-pickup').hidden = !schedule;
+  feature.hidden = !schedule;
   byId('unknown-pickup').hidden = showAll || Boolean(schedule);
   byId('route-change').hidden = !hasUpcomingChange(showAll ? 'Sardinal' : district);
   if (showAll) renderScheduleList();
   if (!schedule) return;
+  const photo = scheduleItems.find(item => item.dataset.scheduleDistrict === district).querySelector('img');
+  const caption = byId('schedule-feature-caption');
+  caption.textContent = 'Foto del distrito de ' + district;
+  feature.replaceChildren(photo.cloneNode(), caption);
   const {date, changed} = nextPickup(district);
   const weekday = capitalize(weekdayNames[date.getDay()]);
   byId('pickup-tile').dateTime = isoDate(date);

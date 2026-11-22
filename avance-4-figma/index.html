@@ -7,13 +7,13 @@
   <title>Servicios de basura y reciclaje · Avance 4</title>
   <link rel="icon" href="assets/escudo-carrillo.png" type="image/png">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
-  <link rel="stylesheet" href="avance.css?v=movil-3">
+  <link rel="stylesheet" href="avance.css?v=distritos">
   <link rel="stylesheet" href="lectura-facil.css?v=movil-3" id="lectura-style" media="not all">
   <link rel="stylesheet" href="movil.css?v=movil-3">
   <script src="vendor/leaflet/leaflet.js" defer></script>
   <script src="mapa.js" defer></script>
   <script src="modo-adulto-mayor.js?v=movil-3" defer></script>
-  <script src="app.js?v=movil-3" defer></script>
+  <script src="app.js?v=distritos" defer></script>
 </head>
 <body>
 <svg class="material-symbols" aria-hidden="true" focusable="false">
@@ -119,7 +119,44 @@
         <section class="white-panel calendar-panel" aria-labelledby="calendar-title">
           <h2 id="calendar-title" data-texto-ampliado="Día y hora de recolección">Calendario de recolección</h2>
           <div class="calendar-location"><strong id="route-place">Todos los distritos</strong><span id="route-district">4 horarios de ejemplo</span></div>
-          <ul class="schedule-list" id="schedule-list" aria-label="Horarios por distrito"></ul>
+          <ul class="schedule-list" id="schedule-list" aria-label="Horarios por distrito">
+            <li data-schedule-district="Sardinal">
+              <img class="schedule-photo" src="assets/distritos/sardinal.webp" width="330" height="247" alt="Puente de Sardinal, rodeado de árboles" loading="lazy" decoding="async">
+              <div class="schedule-info">
+                <div class="schedule-head"><h3>Sardinal</h3><span class="schedule-day"></span></div>
+                <p class="schedule-hours"></p>
+                <p class="schedule-next"></p>
+                <button class="plain-link" type="button" data-locality="Sardinal|Sardinal">Ver solo Sardinal</button>
+              </div>
+            </li>
+            <li data-schedule-district="Filadelfia">
+              <img class="schedule-photo" src="assets/distritos/filadelfia.webp" width="480" height="360" alt="Arco de entrada al parque central de Filadelfia" loading="lazy" decoding="async">
+              <div class="schedule-info">
+                <div class="schedule-head"><h3>Filadelfia</h3><span class="schedule-day"></span></div>
+                <p class="schedule-hours"></p>
+                <p class="schedule-next"></p>
+                <button class="plain-link" type="button" data-locality="Filadelfia|Filadelfia">Ver solo Filadelfia</button>
+              </div>
+            </li>
+            <li data-schedule-district="Palmira">
+              <img class="schedule-photo" src="assets/distritos/palmira.webp" width="330" height="250" alt="Quiosco circular del parque de Palmira" loading="lazy" decoding="async">
+              <div class="schedule-info">
+                <div class="schedule-head"><h3>Palmira</h3><span class="schedule-day"></span></div>
+                <p class="schedule-hours"></p>
+                <p class="schedule-next"></p>
+                <button class="plain-link" type="button" data-locality="Palmira|Palmira">Ver solo Palmira</button>
+              </div>
+            </li>
+            <li data-schedule-district="Belén">
+              <img class="schedule-photo" src="assets/distritos/belen.webp" width="330" height="185" alt="Monumento al Montador en el parque de Belén de Carrillo" loading="lazy" decoding="async">
+              <div class="schedule-info">
+                <div class="schedule-head"><h3>Belén</h3><span class="schedule-day"></span></div>
+                <p class="schedule-hours"></p>
+                <p class="schedule-next"></p>
+                <button class="plain-link" type="button" data-locality="Belén|Belén">Ver solo Belén</button>
+              </div>
+            </li>
+          </ul>
           <div id="route-change" class="calendar-alert"><span>Hay un cambio de día en Sardinal.</span><a href="#avisos">Ver aviso</a></div>
           <div class="pickup" id="sardinal-pickup">
             <time data-vista-normal class="date-tile" id="pickup-tile" datetime=""><strong id="pickup-day"></strong><span id="pickup-month"></span></time>
@@ -136,6 +173,9 @@
             <p class="pickup-weekly" id="reading-pickup-weekly"></p>
             </div>
           </div>
+          <figure class="schedule-feature" id="schedule-feature" hidden>
+            <figcaption id="schedule-feature-caption"></figcaption>
+          </figure>
           <div class="pickup pickup-pending" id="unknown-pickup" hidden>
             <img src="assets/iconos/trash-can.svg" width="20" height="24" alt="">
             <div>
@@ -152,6 +192,16 @@
           <div class="pickup-row"><img src="assets/iconos/recycle.svg" width="20" height="20" alt=""><div><h3>Residuos reciclables</h3><a href="#centros">Consultar puntos de entrega</a></div><span class="pending">Por confirmar</span></div>
           <div class="pickup-row"><img src="assets/iconos/leaf.svg" width="20" height="20" alt=""><div><h3>Residuos orgánicos</h3><p>Sin recorrido verificado</p></div><span class="pending">Por confirmar</span></div>
           <p class="calendar-note">Confirmá el horario vigente con la Municipalidad.</p>
+          <details class="schedule-credits">
+            <summary>Créditos de las fotos</summary>
+            <ul>
+              <li><a href="https://commons.wikimedia.org/wiki/File:Puente_sardinal.jpg">Puente de Sardinal</a> · Chepetoño</li>
+              <li><a href="https://commons.wikimedia.org/wiki/File:Park_filadeflfia.jpg">Parque de Filadelfia</a> · Chepetoño</li>
+              <li><a href="https://commons.wikimedia.org/wiki/File:Quiosco_de_Palmira.jpg">Quiosco de Palmira</a> · Chepetoño</li>
+              <li><a href="https://commons.wikimedia.org/wiki/File:Monumento_al_Montador,_Belen_de_Carrillo,_Guanacaste_-_panoramio.jpg">Monumento al Montador en Belén</a> · Jorge Arturo Villalo…</li>
+            </ul>
+            <p>Fotos de Wikimedia Commons, adaptadas a WebP y encuadradas para el calendario. Licencia <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.es">CC BY-SA 3.0</a>.</p>
+          </details>
         </section>
         <section class="white-panel map-panel">
           <div class="panel-heading"><h2>Mapa de Carrillo</h2><a href="https://www.google.com/maps/@?api=1&amp;map_action=map&amp;center=10.475%2C-85.612&amp;zoom=12" target="_blank" rel="noopener noreferrer">Abrir en Google Maps ↗</a></div>

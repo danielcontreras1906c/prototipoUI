@@ -365,13 +365,44 @@ html[data-lectura-ampliada] [data-vista-normal] { display: none !important; }
 
 /* Vista sin comunidad elegida: todos los horarios por distrito. */
 .schedule-list { display: grid; gap: 0; margin: 4px 0 0; padding: 0; list-style: none; }
-.schedule-list li { display: grid; gap: 2px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.schedule-list li {
+  display: grid;
+  grid-template-columns: clamp(76px, 29%, 144px) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(10px, 3vw, 16px);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.schedule-photo {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--control);
+  background: var(--shade);
+}
+.schedule-info { display: grid; gap: 2px; }
 .schedule-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 12px; }
 .schedule-head h3 { margin: 0; font-size: 1.0625rem; }
+@media (max-width: 540px) {
+  .schedule-head { flex-direction: column; align-items: start; }
+}
 .schedule-day { color: var(--green-dark); font-weight: 700; }
 .schedule-hours, .schedule-next { margin: 0; }
 .schedule-next { color: var(--secondary); font-size: .9375rem; }
 .schedule-list .plain-link { justify-self: start; min-height: 44px; }
+.schedule-feature { width: min(100%, 330px); margin: 14px 0 0; }
+.schedule-feature .schedule-photo { aspect-ratio: 2 / 1; }
+.schedule-feature figcaption { margin-top: 4px; color: var(--quiet); font-size: .9375rem; }
+.schedule-credits { margin-top: 8px; color: var(--quiet); font-size: .9375rem; }
+.schedule-credits summary {
+  min-height: 44px;
+  padding-block: 11px;
+  color: var(--green);
+  cursor: pointer;
+}
+.schedule-credits ul { margin: 0 0 8px; padding-inline-start: 20px; }
+.schedule-credits p { margin: 0; }
 .pickup-weekly { margin: 4px 0 0; color: var(--secondary); font-size: .9375rem; }
 .directory-search { margin-bottom: 12px; }
 .directory-search label { display: block; margin-bottom: 4px; font-weight: 600; }
