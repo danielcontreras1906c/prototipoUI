@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="es-CR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Versión web del prototipo de Figma del Avance 4 para los servicios de residuos de Carrillo.">
+  <title>Servicios de basura y reciclaje · Avance 4</title>
+  <link rel="icon" href="assets/escudo-carrillo.png" type="image/png">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="avance.css?v=distritos">
+  <link rel="stylesheet" href="lectura-facil.css?v=movil-3" id="lectura-style" media="not all">
+  <link rel="stylesheet" href="movil.css?v=movil-3">
+  <script src="vendor/leaflet/leaflet.js" defer></script>
+  <script src="mapa.js" defer></script>
+  <script src="modo-adulto-mayor.js?v=movil-3" defer></script>
+  <script src="app.js?v=distritos" defer></script>
+</head>
+<body>
+<svg class="material-symbols" aria-hidden="true" focusable="false">
+  <symbol id="icon-material-carton" viewBox="0 0 24 24"><path d="M7 3h7l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M14 3v5h4M8 12h7m-7 4h7"/></symbol>
+  <symbol id="icon-material-plastico" viewBox="0 0 24 24"><path d="M10 3h4v4l3 4v8a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-8l3-4V3Zm-1 0h6M7 12h10m-10 4h10"/></symbol>
+  <symbol id="icon-material-metal" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="6" ry="2.5"/><path d="M6 5.5v13c0 1.4 2.7 2.5 6 2.5s6-1.1 6-2.5v-13M9 11v5m2-10.5h2"/></symbol>
+  <symbol id="icon-material-vidrio" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="4" rx="1"/><path d="M7 7v1.5L5 11v7a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3v-7l-2-2.5V7M8 12v5"/></symbol>
+  <symbol id="icon-material-electronicos" viewBox="0 0 24 24"><path d="M5 16V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10m-14 0-3 3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1l-3-3Zm5 2h4"/></symbol>
+  <symbol id="icon-material-muebles" viewBox="0 0 24 24"><path d="M5 11V8a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v3M5 18v3m14-3v3M6 15v-2a2 2 0 0 0-4 0v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a2 2 0 0 0-4 0v2Z"/></symbol>
+  <symbol id="icon-location" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11s-8-6-8-11a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="15" rx="2"/><path d="M8 3v6m8-6v6M4 11h16m-12 4h2m4 0h2"/></symbol>
+  <symbol id="icon-megaphone" viewBox="0 0 24 24"><path d="M4 10h5l10-5v14l-10-5H4a2 2 0 0 1-2-2 2 2 0 0 1 2-2Zm5 4 2 6H7l-2-6"/></symbol>
+  <symbol id="icon-center" viewBox="0 0 24 24"><path d="M3 21V9l9-5 9 5v12H3Zm4 0V11h10v10m-10-6h10"/></symbol>
+  <symbol id="icon-clipboard" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="16" rx="2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m8.5 13 2 2 4-4m-6 7h7"/></symbol>
+  <symbol id="icon-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></symbol>
+</svg>
+  <a class="skip-link" href="#contenido">Omitir e ir al contenido</a>
+  <header class="avance-header">
+    <div class="avance-header-inner">
+      <a class="municipal-brand" href="https://www.municarrillo.go.cr/" target="_blank" rel="noopener noreferrer">
+        <img src="assets/escudo-carrillo.png" width="40" height="40" alt="">
+        <span>Municipalidad de Carrillo<small>Servicios de basura y reciclaje</small></span>
+      </a>
+      <button class="mobile-menu" id="menu-button" type="button" aria-controls="service-tabs" aria-expanded="false">
+        <img src="assets/iconos/bars.svg" id="menu-icon" width="16" height="16" alt=""><span id="menu-label">Menú</span>
+      </button>
+      <div class="reading-control" id="reading-control" hidden>
+        <button class="btn reading-toggle" id="reading-toggle" type="button">Activar modo adulto mayor</button>
+        <span class="visually-hidden" id="reading-status" role="status"></span>
+      </div>
+      <nav id="service-tabs" class="section-tabs" aria-label="Servicios de basura y reciclaje">
+      <a href="#inicio" data-screen-link="inicio" aria-current="page"><img class="mobile-tab-icon" src="assets/iconos/house.svg" width="18" height="18" alt=""><span>Inicio</span></a>
+      <a href="#rutas" data-screen-link="rutas"><img class="mobile-tab-icon" src="assets/iconos/calendar-days.svg" width="18" height="18" alt=""><span data-texto-ampliado="Cuándo pasa el camión">Rutas y horarios</span></a>
+      <a href="#reciclaje" data-screen-link="reciclaje"><img class="mobile-tab-icon" src="assets/iconos/recycle.svg" width="18" height="18" alt=""><span>Cómo reciclar</span></a>
+      <a href="#centros" data-screen-link="centros"><img class="mobile-tab-icon" src="assets/iconos/location-dot.svg" width="18" height="18" alt=""><span data-texto-ampliado="Dónde llevar el reciclaje">Centros de acopio</span></a>
+      <a href="#avisos" data-screen-link="avisos"><img class="mobile-tab-icon" src="assets/iconos/bell.svg" width="18" height="18" alt=""><span data-texto-ampliado="Avisos">Avisos y campañas</span></a>
+      <a href="#reportes" data-screen-link="reportes"><img class="mobile-tab-icon" src="assets/iconos/clipboard-list.svg" width="18" height="18" alt=""><span data-texto-ampliado="Hacer un reporte">Reportes y consultas</span></a>
+    </nav>
+    </div>
+  </header>
+  <main id="contenido" class="service-container" tabindex="-1">
+
+    <section id="inicio" class="screen" data-screen aria-labelledby="home-title">
+      <div class="home-lead">
+        <div class="hero-copy">
+          <h1 id="home-title" data-texto-ampliado="Basura y reciclaje en Carrillo">Recolección y reciclaje en Carrillo</h1>
+          <p data-texto-ampliado="Revisá cuándo pasa el camión de la basura, cómo separar los residuos y dónde llevarlos.">Consultá cuándo pasa el camión y dónde entregar tus residuos.</p>
+          <section data-lectura-only class="guided-start" aria-labelledby="home-search-title">
+            <h2 id="home-search-title">¿Cuándo pasa el camión?</h2>
+            <p>Consultá directamente los días y horas disponibles.</p>
+            <a class="btn guided-primary" href="#rutas">
+              <svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+              Ver horarios de recolección
+            </a>
+          </section>
+          <div data-vista-normal class="community-search">
+            <span class="community-label" id="home-community-label">Consultá por comunidad</span>
+            <button class="btn secondary community-control" type="button" id="home-community-button" data-open="district-directory" data-picker="home" aria-haspopup="dialog" aria-labelledby="home-community-label home-community-choice"><img src="assets/iconos/location-dot.svg" width="16" height="20" alt=""><span id="home-community-choice">Elegí tu comunidad</span><span class="chevron" aria-hidden="true"></span></button>
+          </div>
+        </div>
+        <figure class="coast-hero">
+          <img class="coast-photo" src="assets/portada-costa.webp" width="1920" height="701" alt="Vista ilustrativa del Pacífico de Guanacaste">
+          <figcaption>Pacífico guanacasteco · Paisaje ilustrativo</figcaption>
+        </figure>
+      </div>
+
+      <div class="home-bottom">
+        <section class="home-services" aria-labelledby="home-services-title">
+          <h2 id="home-services-title" data-texto-ampliado="¿Qué querés hacer?">Consultas del servicio</h2>
+          <ul class="service-list">
+            <li><a href="#rutas"><img src="assets/iconos/truck.svg" width="16" height="16" alt=""><span><strong data-texto-ampliado="Ver el horario del camión">Rutas y horarios</strong><small data-texto-ampliado="Elegí la comunidad donde vivís.">Calendario por comunidad</small></span><span aria-hidden="true">→</span></a></li>
+            <li><a href="#reciclaje"><img src="assets/iconos/recycle.svg" width="16" height="16" alt=""><span><strong data-texto-ampliado="Aprender a separar los residuos">Cómo reciclar</strong><small data-texto-ampliado="Reconocé cada material por su foto.">Preparación por material</small></span><span aria-hidden="true">→</span></a></li>
+            <li><a href="#centros"><img src="assets/iconos/location-dot.svg" width="16" height="16" alt=""><span><strong data-texto-ampliado="Encontrar dónde llevar el reciclaje">Centros de acopio</strong><small data-texto-ampliado="Revisá qué materiales recibe cada lugar.">Lugares y materiales que reciben</small></span><span aria-hidden="true">→</span></a></li>
+            <li><a href="#reportes"><img src="assets/iconos/clipboard-list.svg" width="16" height="16" alt=""><span><strong data-texto-ampliado="Hacer un reporte o una consulta">Reportes y consultas</strong><small data-texto-ampliado="Practicá cómo contar lo que pasó.">Formulario de demostración</small></span><span aria-hidden="true">→</span></a></li>
+          </ul>
+        </section>
+        <aside class="notice-ribbon" aria-labelledby="home-notice-title">
+          <p class="notice-meta">Aviso · Sardinal</p>
+          <h2 id="home-notice-title">Cambio de recolección</h2>
+          <div class="route-dates">
+            <time datetime="2026-12-07"><strong>7</strong><span>Lunes</span></time>
+            <span class="route-thread" aria-hidden="true"></span>
+            <time datetime="2026-12-08"><strong>8</strong><span>Martes</span></time>
+          </div>
+          <p>Diciembre de 2026</p>
+          <button class="plain-link" type="button" data-open="notice-change">Ver el aviso</button>
+        </aside>
+      </div>
+    </section>
+
+    <section id="rutas" class="screen" data-screen aria-labelledby="routes-title">
+      <div class="screen-heading"><h1 id="routes-title" data-texto-ampliado="¿Cuándo pasa el camión de la basura?">Rutas y horarios de recolección</h1><p data-texto-ampliado="Acá están los días en que pasa el camión en cada distrito. Si querés, elegí tu comunidad para ver solo el tuyo.">Estos son los horarios por distrito. Elegí tu comunidad para ver solo el tuyo.</p></div>
+      <div class="community-field">
+        <p data-lectura-only id="reading-route-choice" role="status" hidden></p>
+        <span data-vista-normal id="route-community-label">Comunidad</span>
+        <button class="btn secondary community-control" id="route-community" type="button" data-open="district-directory" data-picker="rutas" aria-labelledby="route-community-label route-choice" aria-haspopup="dialog">
+          <img src="assets/iconos/location-dot.svg" width="16" height="20" alt=""><span data-vista-normal id="route-choice">Todas las comunidades</span><span data-lectura-only id="reading-route-button">Elegir mi comunidad</span><span class="chevron" aria-hidden="true"></span>
+        </button>
+        <button class="plain-link" type="button" id="reading-route-reset" hidden>Ver todos los horarios</button>
+      </div>
+      <div class="route-layout">
+        <section class="white-panel calendar-panel" aria-labelledby="calendar-title">
+          <h2 id="calendar-title" data-texto-ampliado="Día y hora de recolección">Calendario de recolección</h2>
+          <div class="calendar-location"><strong id="route-place">Todos los distritos</strong><span id="route-district">4 horarios de ejemplo</span></div>
+          <ul class="schedule-list" id="schedule-list" aria-label="Horarios por distrito">
+            <li data-schedule-district="Sardinal">
+              <img class="schedule-photo" src="assets/distritos/sardinal.webp" width="330" height="247" alt="Puente de Sardinal, rodeado de árboles" loading="lazy" decoding="async">
+              <div class="schedule-info">
+                <div class="schedule-head"><h3>Sardinal</h3><span class="schedule-day"></span></div>
+                <p class="schedule-hours"></p>
+                <p class="schedule-next"></p>
+                <button class="plain-link" type="button" data-locality="Sardinal|Sardinal">Ver solo Sardinal</button>
+              </div>
+            </li>
+            <li data-schedule-district="Filadelfia">
+              <img class="schedule-photo" src="assets/distritos/filadelfia.webp" width="480" height="360" alt="Arco de entrada al parque central de Filadelfia" loading="lazy" decoding="async">
+              <div class="schedule-info">
+                <div class="schedule-head"><h3>Filadelfia</h3><span class="schedule-day"></span></div>
+                <p class="schedule-hours"></p>
+                <p class="schedule-next"></p>
+                <button class="plain-link" type="button" data-locality="Filadelfia|Filadelfia">Ver solo Filadelfia</button>
+              </div>
+            </li>
+            <li data-schedule-district="Palmira">
+              <img class="schedule-photo" src="assets/distritos/palmira.webp" width="330" height="250" alt="Quiosco circular del parque de Palmira" loading="lazy" decoding="async">
+              <div class="schedule-info">
+                <div class="schedule-head"><h3>Palmira</h3><span class="schedule-day"></span></div>
+                <p class="schedule-hours"></p>
+                <p class="schedule-next"></p>
+                <button class="plain-link" type="button" data-locality="Palmira|Palmira">Ver solo Palmira</button>
+              </div>
+            </li>
+            <li data-schedule-district="Belén">
+              <img class="schedule-photo" src="assets/distritos/belen.webp" width="330" height="185" alt="Monumento al Montador en el parque de Belén de Carrillo" loading="lazy" decoding="async">
+              <div class="schedule-info">
+                <div class="schedule-head"><h3>Belén</h3><span class="schedule-day"></span></div>
+                <p class="schedule-hours"></p>
+                <p class="schedule-next"></p>
+                <button class="plain-link" type="button" data-locality="Belén|Belén">Ver solo Belén</button>
+              </div>
+            </li>
+          </ul>
+          <div id="route-change" class="calendar-alert"><span>Hay un cambio de día en Sardinal.</span><a href="#avisos">Ver aviso</a></div>
+          <div class="pickup" id="sardinal-pickup">
+            <time data-vista-normal class="date-tile" id="pickup-tile" datetime=""><strong id="pickup-day"></strong><span id="pickup-month"></span></time>
+            <div data-vista-normal><span class="small-label">Próxima recolección</span><h3>Basura ordinaria</h3><p id="pickup-summary"></p><p class="pickup-weekly" id="pickup-weekly"></p></div>
+            <div data-lectura-only class="guided-pickup">
+            <span class="small-label">Próxima recolección</span>
+            <h3>Basura ordinaria</h3>
+            <p><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-calendar"></use></svg>
+              <time id="pickup-date" datetime=""></time>
+            </p>
+            <p><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-clock"></use></svg>
+              <span id="pickup-hours"></span>
+            </p>
+            <p class="pickup-weekly" id="reading-pickup-weekly"></p>
+            </div>
+          </div>
+          <figure class="schedule-feature" id="schedule-feature" hidden>
+            <figcaption id="schedule-feature-caption"></figcaption>
+          </figure>
+          <div class="pickup pickup-pending" id="unknown-pickup" hidden>
+            <img src="assets/iconos/trash-can.svg" width="20" height="24" alt="">
+            <div>
+              <h3>Basura ordinaria</h3>
+              <p data-texto-ampliado="Todavía no tenemos el horario de esta comunidad.">Horario todavía sin confirmar</p>
+              <p class="pending-help">Mientras tanto, podés hacer esto:</p>
+              <ul class="pending-actions">
+                <li><a href="#avisos">Ver avisos de recolección</a></li>
+                <li><a href="#reportes">Hacer una consulta</a></li>
+                <li><a href="https://www.municarrillo.go.cr/" target="_blank" rel="noopener noreferrer">Ir al sitio de la Municipalidad ↗</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="pickup-row"><img src="assets/iconos/recycle.svg" width="20" height="20" alt=""><div><h3>Residuos reciclables</h3><a href="#centros">Consultar puntos de entrega</a></div><span class="pending">Por confirmar</span></div>
+          <div class="pickup-row"><img src="assets/iconos/leaf.svg" width="20" height="20" alt=""><div><h3>Residuos orgánicos</h3><p>Sin recorrido verificado</p></div><span class="pending">Por confirmar</span></div>
+          <p class="calendar-note">Confirmá el horario vigente con la Municipalidad.</p>
+          <details class="schedule-credits">
+            <summary>Créditos de las fotos</summary>
+            <ul>
+              <li><a href="https://commons.wikimedia.org/wiki/File:Puente_sardinal.jpg">Puente de Sardinal</a> · Chepetoño</li>
+              <li><a href="https://commons.wikimedia.org/wiki/File:Park_filadeflfia.jpg">Parque de Filadelfia</a> · Chepetoño</li>
+              <li><a href="https://commons.wikimedia.org/wiki/File:Quiosco_de_Palmira.jpg">Quiosco de Palmira</a> · Chepetoño</li>
+              <li><a href="https://commons.wikimedia.org/wiki/File:Monumento_al_Montador,_Belen_de_Carrillo,_Guanacaste_-_panoramio.jpg">Monumento al Montador en Belén</a> · Jorge Arturo Villalo…</li>
+            </ul>
+            <p>Fotos de Wikimedia Commons, adaptadas a WebP y encuadradas para el calendario. Licencia <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.es">CC BY-SA 3.0</a>.</p>
+          </details>
+        </section>
+        <section class="white-panel map-panel">
+          <div class="panel-heading"><h2>Mapa de Carrillo</h2><a href="https://www.google.com/maps/@?api=1&amp;map_action=map&amp;center=10.475%2C-85.612&amp;zoom=12" target="_blank" rel="noopener noreferrer">Abrir en Google Maps ↗</a></div>
+          <p data-texto-ampliado="Podés filtrar por comunidad o tocar su nombre en el mapa. Usá + y − para acercarlo o alejarlo.">Arrastrá el mapa para explorar. Elegí un punto para consultar su calendario.</p>
+          <div class="live-map" data-live-map role="region" aria-label="Mapa de cabeceras distritales" hidden></div>
+          <div class="fig-map route-map" data-local-map role="region" aria-label="Mapa de cabeceras distritales (vista local)" tabindex="0">
+            <div class="map-layer">
+              <img src="assets/mapa-rutas.svg" alt="" width="960" height="565">
+              <button class="pin pin-sardinal" type="button" data-latlng="10.51722,-85.64889" data-locality="Sardinal|Sardinal" aria-label="Ver calendario de Sardinal"><img src="assets/pin-distrito.svg" alt=""><span>Sardinal</span></button>
+              <button class="pin pin-palmira" type="button" data-latlng="10.51694,-85.57750" data-locality="Palmira|Palmira" aria-label="Ver calendario de Palmira"><img src="assets/pin-distrito.svg" alt=""><span>Palmira</span></button>
+              <button class="pin pin-filadelfia" type="button" data-latlng="10.44722,-85.55194" data-locality="Filadelfia|Filadelfia" aria-label="Ver calendario de Filadelfia"><img src="assets/pin-distrito.svg" alt=""><span>Filadelfia</span></button>
+              <button class="pin pin-belen" type="button" data-latlng="10.40972,-85.58944" data-locality="Belén|Belén" aria-label="Ver calendario de Belén"><img src="assets/pin-distrito.svg" alt=""><span>Belén</span></button>
+            </div>
+          </div>
+          <div class="map-meta"><button class="plain-link" type="button" data-recenter><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-target"></use></svg>Volver a Carrillo</button><span>Cabeceras distritales</span><a data-local-attribution href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a></div>
+        <div class="map-help"><p data-map-status role="status"></p><button class="plain-link" type="button" data-map-retry hidden>Reintentar mapa en línea</button></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="reciclaje" class="screen" data-screen aria-labelledby="recycling-title">
+      <div class="screen-heading with-search"><div><h1 id="recycling-title">¿Cómo separar tus residuos?</h1><p data-texto-ampliado="Buscá el material por su nombre o reconocelo en la foto. Elegí «Ver preparación» para ver los pasos.">Separá los materiales y revisá cómo prepararlos para la entrega.</p></div><div class="compact-search"><label class="visually-hidden" for="material-query">Buscar material</label><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg><input id="material-query" type="search" placeholder="Buscar material…"></div></div>
+      <div id="materials-empty" class="empty-state materials-empty" hidden><h2 id="materials-empty-title">No encontramos ese material</h2><p id="materials-empty-text"></p><div class="empty-actions"><button class="btn secondary" type="button" id="reset-materials">Ver todos los materiales</button><button class="plain-link" type="button" data-open="material-electronicos">Ver condiciones de Electrónicos</button></div></div>
+      <div class="recycling-grid">
+        <article class="recycle-card paper" data-material-card data-name="papel carton periodicos periodico cajas caja hojas revistas cuadernos sobres"><h2 id="material-carton-label"><img class="material-thumbnail" src="assets/miniaturas/carton.webp" width="152" height="108" alt="" decoding="async">Papel y cartón</h2><ul><li>Periódicos y hojas</li><li>Cajas plegadas</li><li>Papel limpio y seco</li></ul><button class="btn material-button" type="button" data-open="material-carton" aria-haspopup="dialog" aria-label="Ver preparación de papel y cartón">Ver preparación</button></article>
+        <article class="recycle-card plastic" data-material-card data-name="plastico botellas botella envases envase tapas pet frascos plasticos"><h2 id="material-plastico-label"><img class="material-thumbnail" src="assets/miniaturas/plastico.webp" width="152" height="108" alt="" decoding="async">Plástico</h2><ul><li>Botellas vacías</li><li>Envases sin restos</li><li>Tapas, según recepción</li></ul><button class="btn material-button" type="button" data-open="material-plastico" aria-haspopup="dialog" aria-label="Ver preparación de plástico">Ver preparación</button></article>
+        <article class="recycle-card metal" data-material-card data-name="metal metales latas lata aluminio hojalata conservas"><h2 id="material-metal-label"><img class="material-thumbnail" src="assets/miniaturas/metal.webp" width="152" height="108" alt="" decoding="async">Metales</h2><ul><li>Latas de bebidas</li><li>Envases metálicos vacíos</li><li>Otros metales, según el centro</li></ul><button class="btn material-button" type="button" data-open="material-metal" aria-haspopup="dialog" aria-label="Ver preparación de metales">Ver preparación</button></article>
+        <article class="recycle-card glass" data-material-card data-name="vidrio botellas botella frascos frasco"><h2 id="material-vidrio-label"><img class="material-thumbnail" src="assets/miniaturas/vidrio.webp" width="152" height="108" alt="" decoding="async">Vidrio</h2><ul><li>Botellas y frascos</li><li>Envueltos para que no se quiebren</li><li>Confirmar el tipo de vidrio</li></ul><button class="btn material-button" type="button" data-open="material-vidrio" aria-haspopup="dialog" aria-label="Ver preparación de vidrio">Ver preparación</button></article>
+      </div>
+      <div class="sorting-guide">
+        <div><h2>Va al reciclaje</h2><p>Botellas plásticas vacías, latas, cartón y papel limpios, frascos de vidrio.</p></div>
+        <div><h2>Va a la basura ordinaria</h2><p>Pañales, papel higiénico y servilletas usadas, empaques de snacks y cerámica rota.</p><button type="button" class="plain-link" data-open="ordinary-examples" data-texto-ampliado="Ejemplos de basura ordinaria">Ver ejemplos</button></div>
+      </div>
+      <div class="special-materials"><article data-material-card data-name="electronicos computadora celular telefono aparatos equipos laptop tablet impresora televisor tele cargadores cables pilas baterias electrodomesticos"><div class="special-material-label"><img class="material-thumbnail" src="assets/miniaturas/electronicos.webp" width="152" height="108" alt="" decoding="async"><div><h2 id="material-electronicos-label">Electrónicos</h2><p>Equipos que requieren una opción de entrega específica.</p></div></div><button class="plain-link" type="button" data-open="material-electronicos" aria-haspopup="dialog" aria-label="Ver condiciones de entrega de electrónicos">Ver condiciones <svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></button></article><article data-material-card data-name="muebles sillones sillon sofa colchones colchon camas mesas sillas voluminosos"><div class="special-material-label"><img class="material-thumbnail" src="assets/miniaturas/muebles.webp" width="152" height="108" alt="" decoding="async"><div><h2 id="material-muebles-label">Muebles</h2><p>Consultá tamaños, cantidades y jornadas autorizadas.</p></div></div><button class="plain-link" type="button" data-open="material-muebles" aria-haspopup="dialog" aria-label="Ver condiciones de entrega de muebles">Ver condiciones <svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></button></article></div>
+      <p class="result-line" id="material-count" role="status" aria-live="polite">6 materiales</p><p class="section-note">Consultá qué recipiente pide cada punto de entrega.</p>
+    </section>
+
+    <section id="centros" class="screen" data-screen aria-labelledby="centers-title">
+      <div class="screen-heading"><h1 id="centers-title" data-texto-ampliado="¿Dónde llevo el reciclaje?">Centros de acopio y reciclaje</h1><p data-texto-ampliado="Escribí el nombre de tu comunidad o el material que querés llevar. Cada ficha indica qué recibe ese lugar.">Buscá por comunidad o por el material que querés entregar.</p></div>
+      <form id="center-search" class="center-search" role="search" aria-label="Buscar centros de acopio"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg><label class="visually-hidden" for="center-query">Buscar por comunidad o material</label><input type="search" id="center-query" placeholder="Comunidad o material"><button type="reset" aria-label="Limpiar búsqueda"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button></form>
+      <div class="centers-layout"><div class="center-list"><p class="result-line" id="center-count" role="status" aria-live="polite">2 centros</p>
+        <article class="center-row" data-center="sardinal" data-materials="plastico carton metal">
+          <div class="center-summary">
+            <h2><button class="center-title" type="button" data-open="point-sardinal"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-center"></use></svg>Centro de acopio de Sardinal</button></h2>
+            <p><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-location"></use></svg>Sardinal, Carrillo · Lugar ficticio</p>
+            <p><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-clock"></use></svg>Lun. a vie. · 8:00&nbsp;a.&nbsp;m. a 3:00&nbsp;p.&nbsp;m.</p>
+            <button class="plain-link small" type="button" data-open="point-sardinal"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-clipboard"></use></svg>Ver condiciones de entrega</button>
+          </div>
+          <img class="center-photo" src="assets/servicio/acopio-materiales.webp" alt="" width="640" height="320" loading="lazy" decoding="async">
+          <ul class="material-tags" aria-label="Materiales que recibe">
+            <li class="tag-paper"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-material-carton"></use></svg>Papel y cartón</li>
+            <li class="tag-plastic"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-material-plastico"></use></svg>Plástico</li>
+            <li class="tag-metal"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-material-metal"></use></svg>Metales</li>
+          </ul>
+        </article>
+        <article class="center-row" data-center="filadelfia" data-materials="plastico carton vidrio metal">
+          <div class="center-summary">
+            <h2><button class="center-title" type="button" data-open="point-filadelfia"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-center"></use></svg>Centro de acopio de Filadelfia</button></h2>
+            <p><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-location"></use></svg>Filadelfia, Carrillo · Lugar ficticio</p>
+            <p><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-clock"></use></svg>Lun. a vie. · 8:00&nbsp;a.&nbsp;m. a 2:00&nbsp;p.&nbsp;m.</p>
+            <button class="plain-link small" type="button" data-open="point-filadelfia"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-clipboard"></use></svg>Ver condiciones de entrega</button>
+          </div>
+          <img class="center-photo" src="assets/servicio/acopio-vidrio.webp" alt="" width="640" height="320" loading="lazy" decoding="async">
+          <ul class="material-tags" aria-label="Materiales que recibe">
+            <li class="tag-paper"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-material-carton"></use></svg>Papel y cartón</li>
+            <li class="tag-plastic"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-material-plastico"></use></svg>Plástico</li>
+            <li class="tag-glass"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-material-vidrio"></use></svg>Vidrio</li>
+            <li class="tag-metal"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-material-metal"></use></svg>Metales</li>
+          </ul>
+        </article>
+        <aside class="campaign-callout" id="campaign-callout"><div class="campaign-summary"><span class="service-icon"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-megaphone"></use></svg></span><div><strong>Jornada de residuos especiales en Belén</strong><p>Consultá la campaña de electrónicos y muebles.</p></div></div><a class="plain-link" href="#avisos" data-campaign>Ver en Avisos →</a></aside>
+        <div id="centers-empty" class="empty-state" hidden><h2>No hay coincidencias</h2><p>Probá otra comunidad o material. Las jornadas temporales están en Avisos y campañas.</p><button class="btn secondary" type="button" id="reset-centers">Limpiar búsqueda</button></div>
+      </div><section class="white-panel map-panel center-map-panel">
+        <div class="panel-heading"><h2>Mapa de centros</h2><a href="https://www.google.com/maps/search/?api=1&amp;query=centros%20de%20reciclaje%20en%20Carrillo%2C%20Guanacaste%2C%20Costa%20Rica" target="_blank" rel="noopener noreferrer">Buscar en Google Maps ↗</a></div>
+        <p>Arrastrá el mapa y seleccioná un punto para ver su ficha.</p>
+        <div class="live-map" data-live-map role="region" aria-label="Mapa de puntos ficticios de entrega" hidden></div>
+          <div class="fig-map centers-map" data-local-map role="region" aria-label="Mapa de puntos ficticios de entrega (vista local)" tabindex="0">
+          <div class="map-layer">
+            <img src="assets/mapa-centros.svg" width="980" height="630" alt="">
+            <button class="pin pin-sardinal" type="button" data-latlng="10.51722,-85.64889" data-map-center="sardinal" data-open="point-sardinal" aria-label="Ver ficha de Sardinal"><img src="assets/pin-acopio.svg" alt=""><span>Sardinal</span></button>
+            <button class="pin pin-filadelfia" type="button" data-latlng="10.44722,-85.55194" data-map-center="filadelfia" data-open="point-filadelfia" aria-label="Ver ficha de Filadelfia"><span>Filadelfia</span><img src="assets/pin-acopio.svg" alt=""></button>
+          </div>
+        </div>
+        <div class="map-meta"><button class="plain-link" type="button" data-recenter><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-target"></use></svg>Volver a Carrillo</button><span>Centros de acopio</span><a data-local-attribution href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap</a></div>
+        <div class="map-help"><p data-map-status role="status"></p><button class="plain-link" type="button" data-map-retry hidden>Reintentar mapa en línea</button></div>
+        <p class="map-caption">Los marcadores señalan localidades de referencia. Confirmá la dirección antes de ir.</p>
+      </section></div>
+    </section>
+
+    <section id="avisos" class="screen" data-screen aria-labelledby="notices-title"><div class="screen-heading"><h1 id="notices-title">Avisos y campañas</h1><p data-texto-ampliado="Revisá si cambió el día de recolección o si hay una jornada para entregar residuos especiales.">Consultá los cambios de recolección y las jornadas de entrega.</p></div><div class="notice-filters"><div class="field"><span class="field-label" id="notice-community-label"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-location"></use></svg>Comunidad</span><input type="hidden" id="notice-community" value=""><button class="btn secondary community-control" type="button" id="notice-community-button" data-open="district-directory" data-picker="notice" aria-haspopup="dialog" aria-labelledby="notice-community-label notice-community-choice"><img src="assets/iconos/location-dot.svg" width="16" height="20" alt=""><span id="notice-community-choice">Todas las comunidades</span><span class="chevron" aria-hidden="true"></span></button></div><div class="field"><label for="notice-kind"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-megaphone"></use></svg>Tipo de aviso</label><select id="notice-kind"><option value="">Todos los avisos</option><option value="cambio">Cambio de recolección</option><option value="campana">Campaña</option></select></div><button class="plain-link" type="button" id="reset-notices" data-texto-ampliado="Ver todos los avisos">Limpiar filtros</button></div><p class="result-line" id="notice-count" role="status" aria-live="polite">2 avisos</p><div class="notice-cards"><article data-notice data-community="Sardinal" data-kind="cambio">
+          <div class="notice-copy">
+            <h2><span class="service-icon"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-calendar"></use></svg></span>Cambio en el día de recolección</h2>
+            <p class="notice-facts"><span><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-location"></use></svg>Sardinal</span><span><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-calendar"></use></svg>7–8 dic. 2026</span><span>Aviso ficticio</span></p>
+            <p>La recolección del lunes 7 pasa al martes 8 de diciembre.</p>
+            <button class="btn" type="button" data-open="notice-change">Consultar el aviso <svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></button>
+          </div>
+          <img class="notice-photo" src="assets/servicio/aviso-recoleccion.webp" alt="Camión recolector en una calle de barrio." width="640" height="320" loading="lazy" decoding="async">
+        </article><article data-notice data-community="Belén" data-kind="campana">
+          <div class="notice-copy">
+            <h2><span class="service-icon"><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-megaphone"></use></svg></span>Jornada de residuos especiales</h2>
+            <p class="notice-facts"><span><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-location"></use></svg>Belén</span><span><svg class="line-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-calendar"></use></svg>12 dic. 2026</span><span>Campaña ficticia</span></p>
+            <p>Consultá qué se recibe y cómo preparar equipos y muebles para la entrega.</p>
+            <button class="btn" type="button" data-open="notice-campaign">Ver la jornada <svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg></button>
+          </div>
+          <img class="notice-photo" src="assets/servicio/aviso-jornada.webp" alt="Equipo electrónico y un sillón preparados para la entrega." width="640" height="320" loading="lazy" decoding="async">
+        </article></div><div id="notices-empty" class="empty-state" hidden><h2>No hay avisos con esos filtros</h2><p>Elegí otra comunidad o consultá todos los avisos.</p></div></section>
+
+    <section id="reportes" class="screen" data-screen aria-labelledby="reports-title">
+  <div id="report-introduction" data-report-step>
+    <div class="screen-heading"><h1 id="reports-title" tabindex="-1">Reportes y consultas</h1><p data-texto-ampliado="Si el camión no pasó o tenés una duda, practicá cómo hacer un reporte o una consulta.">Practicá cómo reportar un problema de recolección o hacer una consulta.</p></div>
+    <div class="report-layout">
+      <aside class="report-intro">
+        <h2>Reporte de demostración</h2>
+        <p>Practicá el trámite con datos de ejemplo. Nada se envía a la Municipalidad.</p>
+        <figure class="report-guide">
+          <img src="assets/servicio/guia-reporte.webp" width="768" height="576" alt="Una persona usa su celular para fotografiar una bolsa junto a un recipiente de recolección." decoding="async" loading="lazy">
+          <figcaption>Si agregás una foto, mostrá el problema y el lugar donde ocurre.</figcaption>
+        </figure>
+      </aside>
+      <section class="white-panel">
+        <h2>Antes de empezar</h2>
+        <ol class="report-instructions">
+          <li>Elegí el tipo de reporte y tu comunidad.</li>
+          <li>Usá una descripción de ejemplo.</li>
+          <li data-texto-ampliado="Si querés, agregá una foto de ejemplo. Después revisá el resumen.">Podés representar una foto y revisar el resumen.</li>
+        </ol>
+        <p>Si salís con un reporte en curso, podés volver a editarlo o descartar los datos.</p>
+        <p id="report-discard-status" role="status"></p>
+        <button class="btn" type="button" id="new-report" data-texto-ampliado="Empezar reporte de prueba">Abrir formulario de prueba</button>
+      </section>
+    </div>
+    <p class="section-note">Demostración académica · El reporte se simula en este navegador.</p>
+  </div>
+
+  <div id="report-edit" data-report-step hidden>
+    <div class="screen-heading"><h1 tabindex="-1" data-texto-ampliado="Contanos qué pasó">Nuevo reporte</h1><p data-lectura-only class="guided-stage">Paso 1 de 2 · Completá los datos</p><p>Elegí las opciones y usá el texto de ejemplo.</p></div>
+    <div class="report-layout">
+      <aside class="report-intro">
+        <img src="assets/iconos/comment-dots.svg" width="44" height="44" alt="">
+        <h2 data-texto-ampliado="¿Qué información ayuda?">Reporte o consulta</h2>
+        <p data-vista-normal>Completá el tipo de reporte, la comunidad y la descripción. La foto es opcional.</p>
+        <ul data-lectura-only class="report-help-list">
+          <li><strong>Qué pasó.</strong> Por ejemplo, el camión no pasó o tenés dudas sobre un residuo.</li>
+          <li><strong>Dónde pasó.</strong> Elegí la comunidad donde ocurrió.</li>
+          <li><strong>Cuándo pasó.</strong> Si lo recordás, indicá el día o la hora aproximada.</li>
+        </ul>
+      </aside>
+      <form id="report-form" class="white-panel report-panel" novalidate>
+        <h2>Datos del reporte</h2>
+        <div class="report-fields">
+          <div class="field"><label for="report-type">Tipo de reporte (obligatorio)</label><p data-lectura-only class="field-help" id="report-type-help">Elegí la opción que más se parece a tu caso. Si tenés otra duda, elegí «Otra consulta».</p><select id="report-type" required><option value="">Seleccioná una opción</option><option>El camión no pasó</option><option>Duda sobre un residuo</option><option>Información de un punto de entrega</option><option>Otra consulta</option></select><p class="field-error" id="report-type-error" hidden>Elegí un tipo de reporte.</p></div>
+          <div class="field"><span class="field-label" id="report-community-label">Comunidad (obligatorio)</span><p data-lectura-only class="field-help" id="report-community-help">Elegí la comunidad donde ocurrió el problema.</p><input type="hidden" id="report-community" value=""><button class="btn secondary community-control" type="button" id="report-community-button" data-open="district-directory" data-picker="report" aria-haspopup="dialog" aria-labelledby="report-community-label report-community-choice"><img src="assets/iconos/location-dot.svg" width="16" height="20" alt=""><span id="report-community-choice">Seleccioná tu comunidad</span><span class="chevron" aria-hidden="true"></span></button><p class="field-error" id="report-community-error" hidden>Elegí la comunidad donde pasó.</p></div>
+        </div>
+        <div class="field description-field">
+          <span id="description-label">Descripción (obligatoria)</span>
+          <p data-lectura-only class="field-help" id="report-description-help">Para practicar, podés usar una frase de ejemplo según el tipo de reporte que elegiste.</p>
+          <button class="description-control" type="button" id="report-description" data-open="sample-description" aria-haspopup="dialog" aria-labelledby="description-label description-text"><span data-vista-normal id="description-text">Elegí una descripción de ejemplo</span><span data-lectura-only id="reading-description-action">Ver descripción de ejemplo</span></button>
+          <p data-lectura-only class="description-example" id="reading-description-text" hidden></p>
+          <p class="field-error" id="report-description-error" hidden>Elegí una descripción de ejemplo.</p>
+        </div>
+        <div class="attachment-line">
+          <div><strong>Foto opcional</strong><p data-lectura-only class="field-help" id="report-photo-help">Podés seguir sin foto. Si querés practicar cómo adjuntarla, usá la foto de ejemplo.</p><p id="report-photo-label" aria-live="polite">Sin foto adjunta</p></div>
+          <button class="btn secondary" type="button" id="sample-photo-button" data-open="sample-photo" aria-haspopup="dialog">Elegir archivo de ejemplo</button>
+          <button class="plain-link" type="button" id="remove-photo" hidden>Quitar foto</button>
+        </div>
+        <p class="field-error" id="report-error" role="alert" hidden>Faltan datos. Revisá los campos marcados arriba.</p>
+        <div class="report-actions">
+          <button class="btn" type="submit">Revisar reporte</button>
+          <button class="btn secondary" type="button" data-cancel-report>Salir sin enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="report-review" data-report-step hidden>
+    <div class="screen-heading"><h1 tabindex="-1">Revisá tu reporte de prueba</h1><p data-lectura-only class="guided-stage">Paso 2 de 2 · Revisá y finalizá</p><p>Comprobá los datos antes de terminar la demostración.</p></div>
+    <section class="white-panel review-panel">
+      <dl>
+        <div><dt>Tipo de reporte</dt><dd id="review-type"></dd></div>
+        <div><dt>Comunidad</dt><dd id="review-community"></dd></div>
+        <div><dt>Descripción</dt><dd id="review-description"></dd></div>
+        <div><dt>Foto opcional</dt><dd id="review-photo"></dd></div>
+      </dl>
+      <div class="report-actions">
+        <button class="btn" type="button" id="finish-report">Finalizar envío de prueba</button>
+        <button class="btn secondary" type="button" id="edit-report">Volver a editar</button>
+        <button class="btn secondary" type="button" data-cancel-report>Salir sin enviar</button>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="report-success" data-report-step hidden>
+    <div class="screen-heading"><h1 tabindex="-1">Demostración completada</h1></div>
+    <section class="white-panel completion-panel">
+      <img src="assets/iconos/clipboard-list.svg" alt="" width="32" height="40">
+      <h2>Tu reporte de prueba quedó listo</h2>
+      <p class="success-reference">Número de seguimiento de ejemplo: <strong id="success-reference">CAR-2026-0000</strong></p>
+      <p>En el servicio real, con este número podrías consultar el avance de tu reporte.</p>
+      <p class="success-note" id="success-detail">Los datos se quedaron en este navegador. La Municipalidad no recibió ningún reporte.</p>
+      <div class="report-actions"><a class="btn" href="#inicio">Volver a Inicio</a><button class="btn secondary" type="button" id="another-report">Crear otro reporte</button></div>
+    </section>
+  </div>
+</section>
+
+    <div class="step-nav step-footer" aria-label="Recorrer el prototipo">
+        <a id="previous-view" class="btn secondary" href="#inicio" hidden>← Anterior</a>
+        <a id="next-view" class="btn secondary" href="#rutas">Siguiente →</a>
+      </div>
+    <footer class="academic-footer">
+      <p>Prototipo académico UTN · Datos de ejemplo pendientes de verificación municipal</p>
+      <a href="../index.html">Ver todos los prototipos</a>
+    </footer>
+  </main>
+  <dialog id="notice-change" aria-labelledby="notice-change-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar aviso"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="example-tag">Aviso ficticio · Sardinal</span><h2 id="notice-change-title">Cambio en el día de recolección</h2><p class="dialog-meta">Publicado el 20 de noviembre de 2026.</p><p>La recolección de basura ordinaria de Sardinal cambia de día esta semana.</p><div class="change-dates"><div><span>Día habitual</span><strong>Lunes 7</strong><p>Diciembre de 2026</p></div><div><span>Nuevo día</span><strong>Martes 8</strong><p>6:00&nbsp;a.&nbsp;m. a 12:00&nbsp;m.&nbsp;d.</p></div></div><h3>¿Qué tengo que hacer?</h3><p>Sacá la basura el martes 8. Hasta entonces, guardá los residuos dentro de tu propiedad.</p><a class="button outline" href="#rutas" data-close>Consultar horarios</a></dialog>
+  <dialog id="notice-campaign" aria-labelledby="notice-campaign-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar aviso"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="example-tag">Campaña ficticia · Belén</span><h2 id="notice-campaign-title">Jornada de residuos especiales</h2><p>Fecha: sábado 12 de diciembre de 2026.</p><p>Horario: 8:00&nbsp;a.&nbsp;m. a 12:00&nbsp;m.&nbsp;d.</p><p>Se reciben electrónicos y muebles. Las cantidades y condiciones se consultan en la ficha.</p><button class="button outline" type="button" data-open="point-belen">Ver condiciones de entrega</button></dialog>
+  <dialog id="point-sardinal" aria-labelledby="point-sardinal-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar ficha"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="example-tag">Lugar ficticio</span><h2 id="point-sardinal-title">Centro de acopio de Sardinal</h2><img class="center-detail-photo" src="assets/servicio/acopio-materiales.webp" alt="Ejemplo de papel, botellas plásticas y latas clasificados." width="640" height="320" loading="lazy" decoding="async"><dl class="detail-list"><div><dt>Comunidad</dt><dd>Sardinal, Carrillo</dd></div><div><dt>Horario</dt><dd>Lunes a viernes, 8:00&nbsp;a.&nbsp;m. a 3:00&nbsp;p.&nbsp;m.</dd></div><div><dt>Dirección</dt><dd>Pendiente de verificación municipal.</dd></div><div><dt>Contacto</dt><dd>Pendiente de confirmar.</dd></div><div><dt>Materiales que recibe</dt><dd>Plástico, papel y cartón, y metales.</dd></div></dl><h3>Condiciones de entrega</h3><ul><li>Materiales separados por tipo.</li><li>Envases vacíos; papel y cartón secos.</li><li>Confirmar el recipiente, las cantidades y la recepción antes de ir.</li><li>No dejar materiales fuera de una recepción autorizada.</li></ul><a href="#reciclaje" data-close>Consultar cómo prepararlos</a></dialog>
+  <dialog id="point-filadelfia" aria-labelledby="point-filadelfia-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar ficha"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="example-tag">Lugar ficticio</span><h2 id="point-filadelfia-title">Centro de acopio de Filadelfia</h2><img class="center-detail-photo" src="assets/servicio/acopio-vidrio.webp" alt="Ejemplo de frascos protegidos con divisiones de cartón." width="640" height="320" loading="lazy" decoding="async"><dl class="detail-list"><div><dt>Comunidad</dt><dd>Filadelfia, Carrillo</dd></div><div><dt>Horario</dt><dd>Lunes a viernes, 8:00&nbsp;a.&nbsp;m. a 2:00&nbsp;p.&nbsp;m.</dd></div><div><dt>Dirección y contacto</dt><dd>Pendientes de verificación.</dd></div><div><dt>Materiales que recibe</dt><dd>Plástico, papel y cartón, vidrio y metales.</dd></div></dl><h3>Condiciones de entrega</h3><ul><li>Materiales separados, vacíos y secos según corresponda.</li><li>Vidrio protegido contra golpes.</li><li>Confirmar el tipo de vidrio, recipiente y cantidades con el receptor.</li></ul><a href="#reciclaje" data-close>Consultar cómo prepararlos</a></dialog>
+  <dialog id="point-belen" aria-labelledby="point-belen-title"><button class="dialog-close" type="button" data-close aria-label="Cerrar ficha"><svg class="icon " aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button><span class="example-tag">Jornada ficticia</span><h2 id="point-belen-title">Jornada de residuos especiales en Belén</h2><dl class="detail-list"><div><dt>Comunidad</dt><dd>Belén, Carrillo</dd></div><div><dt>Horario</dt><dd>Sábado 12 de diciembre de 2026, 8:00&nbsp;a.&nbsp;m. a 12:00&nbsp;m.&nbsp;d.</dd></div><div><dt>Dirección</dt><dd>Pendiente de verificación municipal.</dd></div><div><dt>Contacto</dt><dd>Pendiente de confirmar.</dd></div><div><dt>Materiales que recibe</dt><dd>Aparatos electrónicos y muebles.</dd></div></dl><h3>Condiciones de entrega</h3><ul><li>Consultar qué equipos, tamaños y cantidades se reciben.</li><li>Confirmar cómo proteger los equipos para su traslado.</li><li>Coordinar la entrega en la fecha autorizada.</li><li>No dejar equipos ni muebles en la vía pública.</li></ul><a href="#reciclaje" data-open-material="electronicos" data-close>Consultar preparación de electrónicos</a></dialog>
+  <dialog id="district-directory" class="directory" aria-labelledby="directory-title">
+  <div class="panel-heading">
+    <h2 id="directory-title" data-texto-ampliado="Elegí tu comunidad">Todas las comunidades de Carrillo</h2>
+    <button type="button" class="btn secondary" data-close data-texto-ampliado="Cerrar lista">Cerrar</button>
+  </div>
+  <p data-vista-normal>Elegí una localidad para consultar su calendario.</p>
+  <p data-lectura-only id="directory-help">Escribí el nombre o elegí un distrito. Después, tocá tu comunidad.</p>
+  <div class="directory-search field">
+    <label for="directory-query">Nombre de la comunidad</label>
+    <div class="directory-search-controls">
+      <input id="directory-query" type="search" placeholder="Ej. Sardinal" aria-describedby="directory-help" autocomplete="off">
+      <button class="btn secondary" type="button" id="directory-reset" hidden>Borrar búsqueda</button>
+    </div>
+    <p class="directory-status" id="directory-status" role="status"></p>
+  </div>
+  <p class="directory-empty" id="directory-empty" hidden>No encontramos esa comunidad. Probá otro nombre o borrá la búsqueda para escoger un distrito.</p>
+  <div class="directory-grid"><details open><summary data-lectura-only>Distrito de Filadelfia</summary><h3 data-vista-normal>Filadelfia</h3><ul><li><button type="button" data-locality="Filadelfia|Filadelfia">Filadelfia</button></li><li><button type="button" data-locality="Filadelfia|Bambú">Bambú</button></li><li><button type="button" data-locality="Filadelfia|Cinco Esquinas">Cinco Esquinas</button></li><li><button type="button" data-locality="Filadelfia|Hollywood">Hollywood</button></li><li><button type="button" data-locality="Filadelfia|La Cruz">La Cruz</button></li><li><button type="button" data-locality="Filadelfia|Santa Lucía">Santa Lucía</button></li><li><button type="button" data-locality="Filadelfia|Ballena (parte)">Ballena (parte)</button></li><li><button type="button" data-locality="Filadelfia|Corralillo">Corralillo</button></li><li><button type="button" data-locality="Filadelfia|Guinea">Guinea</button></li><li><button type="button" data-locality="Filadelfia|Isleta">Isleta</button></li><li><button type="button" data-locality="Filadelfia|Jocote">Jocote</button></li><li><button type="button" data-locality="Filadelfia|Juanilama">Juanilama</button></li><li><button type="button" data-locality="Filadelfia|Moralito">Moralito</button></li><li><button type="button" data-locality="Filadelfia|Ojoche">Ojoche</button></li><li><button type="button" data-locality="Filadelfia|San Francisco">San Francisco</button></li></ul></details>
+<details open><summary data-lectura-only>Distrito de Palmira</summary><h3 data-vista-normal>Palmira</h3><ul><li><button type="button" data-locality="Palmira|Palmira">Palmira</button></li><li><button type="button" data-locality="Palmira|Coyolera">Coyolera</button></li><li><button type="button" data-locality="Palmira|María Auxiliadora">María Auxiliadora</button></li><li><button type="button" data-locality="Palmira|Ángeles">Ángeles</button></li><li><button type="button" data-locality="Palmira|Comunidad">Comunidad</button></li><li><button type="button" data-locality="Palmira|Paso Tempisque">Paso Tempisque</button></li><li><button type="button" data-locality="Palmira|San Rafael">San Rafael</button></li></ul></details>
+<details open><summary data-lectura-only>Distrito de Sardinal</summary><h3 data-vista-normal>Sardinal</h3><ul><li><button type="button" data-locality="Sardinal|Sardinal">Sardinal</button></li><li><button type="button" data-locality="Sardinal|Carpintera">Carpintera</button></li><li><button type="button" data-locality="Sardinal|Colegios">Colegios</button></li><li><button type="button" data-locality="Sardinal|Verdún">Verdún</button></li><li><button type="button" data-locality="Sardinal|Artola">Artola</button></li><li><button type="button" data-locality="Sardinal|Cacique">Cacique</button></li><li><button type="button" data-locality="Sardinal|Chorrera">Chorrera</button></li><li><button type="button" data-locality="Sardinal|Coco (Playas del Coco)">Coco (Playas del Coco)</button></li><li><button type="button" data-locality="Sardinal|Guacamaya">Guacamaya</button></li><li><button type="button" data-locality="Sardinal|Huaquitas">Huaquitas</button></li><li><button type="button" data-locality="Sardinal|Libertad">Libertad</button></li><li><button type="button" data-locality="Sardinal|Los Canales">Los Canales</button></li><li><button type="button" data-locality="Sardinal|Matapalo">Matapalo</button></li><li><button type="button" data-locality="Sardinal|Nancital">Nancital</button></li><li><button type="button" data-locality="Sardinal|Nuevo Colón">Nuevo Colón</button></li><li><button type="button" data-locality="Sardinal|Obandito">Obandito</button></li><li><button type="button" data-locality="Sardinal|Ocotal">Ocotal</button></li><li><button type="button" data-locality="Sardinal|Pilas">Pilas</button></li><li><button type="button" data-locality="Sardinal|Playa Hermosa">Playa Hermosa</button></li><li><button type="button" data-locality="Sardinal|Playones">Playones</button></li><li><button type="button" data-locality="Sardinal|San Blas">San Blas</button></li><li><button type="button" data-locality="Sardinal|San Martín">San Martín</button></li><li><button type="button" data-locality="Sardinal|Santa Rita">Santa Rita</button></li><li><button type="button" data-locality="Sardinal|Segovia">Segovia</button></li><li><button type="button" data-locality="Sardinal|Tabores">Tabores</button></li><li><button type="button" data-locality="Sardinal|Zapotal">Zapotal</button></li></ul></details>
+<details open><summary data-lectura-only>Distrito de Belén</summary><h3 data-vista-normal>Belén</h3><ul><li><button type="button" data-locality="Belén|Belén">Belén</button></li><li><button type="button" data-locality="Belén|Villita">Villita</button></li><li><button type="button" data-locality="Belén|Alto San Antonio">Alto San Antonio</button></li><li><button type="button" data-locality="Belén|Cachimbo">Cachimbo</button></li><li><button type="button" data-locality="Belén|Castilla de Oro">Castilla de Oro</button></li><li><button type="button" data-locality="Belén|Coyolito">Coyolito</button></li><li><button type="button" data-locality="Belén|Gallina">Gallina</button></li><li><button type="button" data-locality="Belén|Juanilama">Juanilama</button></li><li><button type="button" data-locality="Belén|Llano">Llano</button></li><li><button type="button" data-locality="Belén|Loma Bonita">Loma Bonita</button></li><li><button type="button" data-locality="Belén|Ojochal">Ojochal</button></li><li><button type="button" data-locality="Belén|Palestina">Palestina</button></li><li><button type="button" data-locality="Belén|Palmas">Palmas</button></li><li><button type="button" data-locality="Belén|Paraíso">Paraíso</button></li><li><button type="button" data-locality="Belén|Penca">Penca</button></li><li><button type="button" data-locality="Belén|Planes">Planes</button></li><li><button type="button" data-locality="Belén|Poroporo">Poroporo</button></li><li><button type="button" data-locality="Belén|Río Cañas Nuevo">Río Cañas Nuevo</button></li><li><button type="button" data-locality="Belén|Santa Ana">Santa Ana</button></li><li><button type="button" data-locality="Belén|Santo Domingo">Santo Domingo</button></li></ul></details></div>
+  <p data-vista-normal class="calendar-note">68 localidades agrupadas en los cuatro distritos</p>
+</dialog>
+<dialog id="ordinary-examples" aria-labelledby="ordinary-title">
+  <h2 id="ordinary-title">Basura ordinaria · Ejemplos</h2>
+  <p>Pañales y papel higiénico usado van a la basura ordinaria.</p>
+  <p>Separá las botellas vacías, las latas y el cartón limpio y seco. Confirmá qué materiales recibe el punto de entrega.</p>
+  <button class="btn secondary" type="button" data-close>Volver a Cómo reciclar</button>
+</dialog>
+<dialog id="material-carton" class="material-dialog paper" aria-labelledby="material-carton-title">
+  <h2 id="material-carton-title" tabindex="-1" autofocus><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-carton"></use></svg></span>Papel y cartón</h2>
+  <div class="material-content">
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/carton-limpio.webp" width="640" height="320" alt="Una mano quita cinta de una caja de cartón." loading="lazy" decoding="async">
+        <figcaption>Separá el papel y el cartón limpios.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/cajas-plegadas.webp" width="640" height="320" alt="Cajas aplanadas junto a una pila de hojas." loading="lazy" decoding="async">
+        <figcaption>Plegá las cajas y mantenelas secas.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Separá el papel y el cartón que tengan grasa o restos de comida.</li>
+      <li>Plegá las cajas para ocupar menos espacio.</li>
+      <li>Guardalos bajo techo para mantenerlos secos.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>Una caja o recipiente seco. Confirmá si el punto solicita los materiales atados, en cajas o en otro recipiente.</p>
+    <p>No hay un color de bolsa municipal verificado en este prototipo.</p>
+    <a href="#centros" data-material-filter="carton">Buscar dónde entregar papel y cartón</a>
+  </div>
+    <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+  </div>
+  <div class="material-actions">
+    <button class="btn secondary" type="button" data-close>Volver a materiales</button>
+  </div>
+</dialog>
+<dialog id="material-plastico" class="material-dialog plastic" aria-labelledby="material-plastico-title">
+  <h2 id="material-plastico-title" tabindex="-1" autofocus><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-plastico"></use></svg></span>Plástico</h2>
+  <div class="material-content">
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/botella-enjuague.webp" width="640" height="320" alt="Una botella plástica bajo el chorro del grifo." loading="lazy" decoding="async">
+        <figcaption>Vaciá y enjuagá si hace falta.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/botellas-escurridas.webp" width="640" height="320" alt="Botellas plásticas boca abajo en un escurridor." loading="lazy" decoding="async">
+        <figcaption>Dejá secar por completo.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Vaciá los envases y retirales los restos.</li>
+      <li>Si hace falta, enjuagá y dejá secar.</li>
+      <li>Separalos de los demás materiales.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>Un recipiente limpio y seco. Confirmá si las tapas se reciben juntas o separadas y qué envases acepta el receptor.</p>
+    <p>No hay un color de bolsa municipal verificado en este prototipo.</p>
+    <a href="#centros" data-material-filter="plastico">Buscar dónde entregar plástico</a>
+  </div>
+    <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+  </div>
+  <div class="material-actions">
+    <button class="btn secondary" type="button" data-close>Volver a materiales</button>
+  </div>
+</dialog>
+<dialog id="material-metal" class="material-dialog metal" aria-labelledby="material-metal-title">
+  <h2 id="material-metal-title" tabindex="-1" autofocus><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-metal"></use></svg></span>Metales</h2>
+  <div class="material-content">
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/lata-vaciado.webp" width="640" height="320" alt="Una lata de aluminio inclinada sobre el fregadero." loading="lazy" decoding="async">
+        <figcaption>Vaciá la lata y retirale los restos.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/latas-secado.webp" width="640" height="320" alt="Latas intactas boca abajo en un escurridor." loading="lazy" decoding="async">
+        <figcaption>Dejalas secar y juntalas con otros metales.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Vaciá los envases y retirales los restos.</li>
+      <li>Dejá secar y mantenelos separados.</li>
+      <li>Evitá manipular bordes cortantes.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>Confirmá el recipiente con el punto de entrega. Los aerosoles y envases con sustancias peligrosas requieren consultar condiciones específicas.</p>
+    <a href="#centros" data-material-filter="metal">Buscar dónde entregar latas y metales</a>
+  </div>
+    <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+  </div>
+  <div class="material-actions">
+    <button class="btn secondary" type="button" data-close>Volver a materiales</button>
+  </div>
+</dialog>
+<dialog id="material-vidrio" class="material-dialog glass" aria-labelledby="material-vidrio-title">
+  <h2 id="material-vidrio-title" tabindex="-1" autofocus><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-vidrio"></use></svg></span>Vidrio</h2>
+  <div class="material-content">
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/frasco-enjuague.webp" width="640" height="320" alt="Una mano enjuaga un frasco de vidrio bajo el grifo." loading="lazy" decoding="async">
+        <figcaption>Vaciá y limpiá los frascos.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/frascos-protegidos.webp" width="640" height="320" alt="Frascos de pie en una caja con divisiones de cartón." loading="lazy" decoding="async">
+        <figcaption>Protegé los frascos para que no choquen.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Vaciá y limpiá los envases.</li>
+      <li>Separá el vidrio de otros materiales.</li>
+      <li>Protegé los envases de golpes y consultá si el receptor acepta ese tipo de vidrio.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>Un recipiente resistente. No coloqués vidrio suelto en bolsas que se puedan romper. Consultá por separado sobre espejos, cerámica, bombillos o vidrio roto.</p>
+    <a href="#centros" data-material-filter="vidrio">Buscar dónde entregar vidrio</a>
+  </div>
+    <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+  </div>
+  <div class="material-actions">
+    <button class="btn secondary" type="button" data-close>Volver a materiales</button>
+  </div>
+</dialog>
+<dialog id="material-electronicos" class="material-dialog special" aria-labelledby="material-electronicos-title">
+  <h2 id="material-electronicos-title" tabindex="-1" autofocus><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-electronicos"></use></svg></span>Electrónicos</h2>
+  <div class="material-content">
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/equipo-seco.webp" width="640" height="320" alt="Portátil cerrada sobre una mesa seca." loading="lazy" decoding="async">
+        <figcaption>Guardá el equipo en un lugar seco.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/equipo-protegido.webp" width="640" height="320" alt="Portátil y cargador protegidos dentro de una caja." loading="lazy" decoding="async">
+        <figcaption>Confirmá cómo llevar el equipo y sus accesorios.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Guardá los equipos en un lugar seco.</li>
+      <li>Consultá cuáles equipos recibe la campaña o el gestor.</li>
+      <li>Coordiná la entrega y confirmá si deben llevarse completos.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>No hay una bolsa definida en el prototipo. Consultá cómo proteger y transportar los equipos.</p>
+    <p>No se confirma recepción en el camión ordinario. No dejés equipos en la vía pública.</p>
+    <a href="#avisos" data-campaign data-close>Buscar dónde entregar electrónicos</a>
+  </div>
+    <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+  </div>
+  <div class="material-actions">
+    <button class="btn secondary" type="button" data-close>Volver a materiales</button>
+  </div>
+</dialog>
+<dialog id="material-muebles" class="material-dialog special" aria-labelledby="material-muebles-title">
+  <h2 id="material-muebles-title" tabindex="-1" autofocus><span class="material-icon" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><use href="#icon-material-muebles"></use></svg></span>Muebles</h2>
+  <div class="material-content">
+  <div class="material-body">
+    <h3>Preparación</h3>
+    <div class="material-photos">
+      <figure>
+        <img src="assets/preparacion/sillon-medidas.webp" width="640" height="320" alt="Cinta métrica extendida a lo ancho de un sillón." loading="lazy" decoding="async">
+        <figcaption>Medí el mueble para confirmar si lo reciben.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/preparacion/sillon-traslado.webp" width="640" height="320" alt="Sillón cubierto con una manta y protectores de cartón." loading="lazy" decoding="async">
+        <figcaption>Prepará el mueble cuando coordinés el traslado.</figcaption>
+      </figure>
+    </div>
+    <ol>
+      <li>Consultá si hay una jornada o un gestor que reciba ese residuo.</li>
+      <li>Confirmá tamaños, cantidades y condiciones.</li>
+      <li>Coordiná el traslado en la fecha y el lugar autorizados.</li>
+    </ol>
+    <h3>Bolsa o recipiente</h3>
+    <p>No se usa una bolsa común. El receptor debe indicar cómo entregar cada objeto.</p>
+    <p>No se confirma recepción en el camión ordinario. No dejés muebles en lotes ni aceras.</p>
+    <a href="#avisos" data-campaign data-close>Buscar dónde entregar muebles</a>
+  </div>
+    <p class="dialog-note">Orientación general: confirmá materiales y condiciones con el receptor.</p>
+  </div>
+  <div class="material-actions">
+    <button class="btn secondary" type="button" data-close>Volver a materiales</button>
+  </div>
+</dialog>
+  <noscript><p class="service-container soft-tip">Activá JavaScript para usar los filtros, los mapas y la simulación del formulario. Todo el contenido de las pantallas está escrito en HTML.</p></noscript>
+<dialog id="sample-description" aria-labelledby="sample-description-title">
+  <h2 id="sample-description-title">Descripción de ejemplo</h2>
+  <p data-lectura-only>Leé la frase. Si te sirve para practicar, tocá «Usar descripción».</p>
+  <p id="sample-description-text">No pasó el camión en el horario del escenario de ejemplo.</p>
+  <div class="dialog-actions"><button class="btn secondary" type="button" data-close>Volver</button><button class="btn" type="button" id="use-description">Usar descripción</button></div>
+</dialog>
+<dialog id="sample-photo" aria-labelledby="sample-photo-title">
+  <h2 id="sample-photo-title">Adjuntar una foto de ejemplo</h2>
+  <p data-vista-normal>El prototipo representa el archivo <strong>foto-ejemplo.jpg</strong> como adjunto opcional.</p>
+  <p data-lectura-only>Una foto ayuda cuando muestra el problema y algo que permita reconocer el lugar. Usá esta imagen para practicar.</p>
+  <figure data-lectura-only class="sample-report-photo"><img src="assets/servicio/guia-reporte.webp" width="768" height="576" alt="Una persona fotografía con su celular una bolsa junto a un recipiente de recolección." loading="lazy"></figure>
+  <div class="dialog-actions"><button class="btn secondary" type="button" data-close>Volver</button><button class="btn" type="button" id="use-photo">Usar foto de ejemplo</button></div>
+</dialog>
+<dialog id="discard-report" aria-labelledby="discard-title" aria-describedby="discard-detail">
+  <h2 id="discard-title">¿Salir sin enviar el reporte?</h2>
+  <p id="discard-detail">Si descartás el reporte de prueba, se borrarán los datos que ingresaste.</p>
+  <div class="dialog-actions">
+    <button class="btn" type="button" id="keep-report" data-close autofocus>Seguir editando</button>
+    <button class="btn secondary danger" type="button" id="confirm-discard">Descartar y salir</button>
+  </div>
+</dialog>
+
+</body>
+</html>
